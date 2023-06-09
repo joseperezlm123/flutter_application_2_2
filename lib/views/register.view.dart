@@ -583,6 +583,7 @@ class _RegisterViewState extends State<RegisterView> {
                               } else {
                                 print('Ha ocurrido un error');
                               }
+                              // Prueba git
                             },
                             child: const Text(
                               'Crear cuenta',
