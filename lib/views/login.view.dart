@@ -50,9 +50,6 @@ class LoginView extends StatelessWidget {
                       fontWeight: FontWeight.w500,
                     ),
                   ),
-                  const SizedBox(
-                    height: 15,
-                  ),
                   // Email Input
                   ChangeNotifierProvider(
                     create: (_) => LoginFormProvider(),
@@ -115,6 +112,7 @@ class LoginView extends StatelessWidget {
                           } else {
                             print('Ha ocurrido un error');
                           }
+                          Navigator.pushNamed(context, 'HomeScreen');
                           // Navigator.pushNamed(context, 'HomeScreen');
                         },
                         child: const Column(

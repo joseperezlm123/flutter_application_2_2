@@ -5,8 +5,13 @@ import 'componentes/solicitar_credito.dart';
 import 'screens/home_screen.dart';
 import 'views/forgot.view.dart';
 import 'views/login.view.dart';
+import 'views/phone_verify.dart';
 import 'views/register.view.dart';
 import 'views/splash.view.dart';
+import 'views/verificate_acount_image.dart';
+import 'views/verification_code.dart';
+import 'views/verify_code_email.dart';
+import 'views/verify_page.dart';
 import 'views/widgets/aviso_privacidad.dart';
 
 void main() {
@@ -31,7 +36,12 @@ class App extends StatelessWidget {
         'AvisoPrivacidad': (context) => const AvisoPrivacidad(),
         'HomeScreen': (context) => const HomeScreen(),
         'CreditCardPage': (context) => const CreditCardPage(),
-        'SolicitarCredito': (context) => SolicitarCredito(),
+        'SolicitarCredito': (context) => const SolicitarCredito(),
+        'VerifyPage': (context) => VerifyPage(),
+        'PhoneVerifyPage': (context) => PhoneVerifyPage(),
+        'OtpForm': (context) => const OtpForm(),
+        'EmailForm': (context) => const EmailForm(),
+        'VerificateAcount': (context) => const VerificateAcount(),
       },
     );
   }

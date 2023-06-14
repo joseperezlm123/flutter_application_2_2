@@ -104,8 +104,8 @@ class Data {
         parServpub: json["par_servpub"],
         emailver: json["emailver"],
         movilver: json["movilver"],
-        createdAt: DateTime.parse(json["created_at"]),
-        updatedAt: DateTime.parse(json["updated_at"]),
+        createdAt: DateTime.parse(json["created_At"]),
+        updatedAt: DateTime.parse(json["updated_At"]),
       );
 
   Map<String, dynamic> toJson() => {

@@ -552,7 +552,7 @@ class _RegisterViewState extends State<RegisterView> {
                         alignment: Alignment.center,
                         child: ElevatedButton(
                             onPressed: () async {
-                              //  Navigator.pushNamed(context, 'LoginView');
+                              Navigator.pushNamed(context, 'PhoneVerifyPage');
                               var post = Data(
                                   cp: cp.text,
                                   rfc: rfc.text,
@@ -583,7 +583,6 @@ class _RegisterViewState extends State<RegisterView> {
                               } else {
                                 print('Ha ocurrido un error');
                               }
-                              // Prueba git
                             },
                             child: const Text(
                               'Crear cuenta',

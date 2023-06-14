@@ -35,6 +35,21 @@ class BaseClient {
     //  }
   }
 
-  Future<dynamic> put(String api) async {}
+  //PUT
+  Future<dynamic> put(String api, dynamic object) async {
+    var url = Uri.parse(baseUrl + api);
+    var _payload = json.encode(object);
+    debugPrint(object.toString());
+    var response = await client.post(
+      url,
+      body: _payload,
+      headers: {"Content-Type": "application/json"},
+    );
+    //if (response.statusCode == 200) {
+    return response.body;
+    // } else {}
+  }
+
+  //DELETE
   Future<dynamic> delete(String api) async {}
 }

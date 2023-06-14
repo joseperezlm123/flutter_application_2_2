@@ -28,17 +28,18 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
-  chopper: ^6.1.3
-  cupertino_icons: ^1.0.2
+  chopper: any
+  cupertino_icons: any
   flutter:
     sdk: flutter
-  flutter_credit_card: ^3.0.6
-  get: ^4.6.5
-  hexcolor: ^3.0.1
-  http: ^1.0.0
-  image_picker: ^0.8.7+5
-  local_auth: ^2.1.6
-  provider: ^6.0.5
+  flutter_credit_card: any
+  get: any
+  hexcolor: any
+  http: any
+  image_picker: any
+  local_auth: any
+  provider: any
+  email_auth: any
 
 dev_dependencies:
 
