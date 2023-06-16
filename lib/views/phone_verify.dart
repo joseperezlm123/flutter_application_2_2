@@ -6,8 +6,6 @@ import '../utils/global.colors.dart';
 
 class PhoneVerifyPage extends StatelessWidget {
   PhoneVerifyPage({super.key});
-  final TextEditingController email = TextEditingController();
-  final TextEditingController contrasena = TextEditingController();
 
   final _keyForm = GlobalKey<FormState>();
 
@@ -62,7 +60,7 @@ class PhoneVerifyPage extends StatelessWidget {
                   ),
                   // Email Input
                   TextFormField(
-                    controller: email,
+                    controller: movil,
                     keyboardType: TextInputType.number,
                     decoration: const InputDecoration(
                       labelText: 'Telefono',
@@ -80,11 +78,12 @@ class PhoneVerifyPage extends StatelessWidget {
                         ),
                         onPressed: () async {
                           Navigator.pushNamed(context, 'OtpForm');
+                          var id = 27;
                           var post =
-                              Data(cp: null, estado: null, movil: movil.text);
+                              Data(movil: movil.text, cp: null, estado: null);
 
                           var response = await BaseClient()
-                              .post('', post.toJson())
+                              .put('/pospecto/$id', post.toJson())
                               .catchError((err) {
                             debugPrint(err.toString());
                           });

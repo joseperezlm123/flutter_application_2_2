@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import '../models/user.provider.dart';
 import '../services/servides.dart';
 import '../utils/global.colors.dart';
+
+enum Gender { masculino, femenino }
 
 class RegisterView extends StatefulWidget {
   @override
@@ -9,40 +12,60 @@ class RegisterView extends StatefulWidget {
 }
 
 class _RegisterViewState extends State<RegisterView> {
-//   final String name;
-//   final Future<List<Prosp>> products;
-//   RegisterView({super.key, required this.name, required this.products});
-//   Future<http.Response> fetchAlbum() {
-//     return http.get(Uri.http('idemo.brave.com.mx', '/api/pospecto'));
-//   }
-//GENERO
-  // final _productDizesList = ["Femenino", "Masculino"];
-  // String _selectedVal = "Femenino";
+  TextEditingController _nombre = TextEditingController();
+  TextEditingController paterno = TextEditingController();
+  TextEditingController materno = TextEditingController();
+  final _genero = TextEditingController();
+  TextEditingController nacimiento = TextEditingController();
+  TextEditingController email = TextEditingController();
+  TextEditingController movil = TextEditingController();
+  TextEditingController curp = TextEditingController();
+  TextEditingController rfc = TextEditingController();
+  TextEditingController domicilio = TextEditingController();
+  //TextEditingController confirmcontrasena = TextEditingController();
+  // TextEditingController contrasena = TextEditingController();
+  TextEditingController estado = TextEditingController();
+  TextEditingController alcaldia = TextEditingController();
+  TextEditingController cp = TextEditingController();
+  TextEditingController ingreso = TextEditingController();
+  //TextEditingController ingresoTipo = TextEditingController();
+  // TextEditingController fueSerPub = TextEditingController();
+  // TextEditingController parSerpub = TextEditingController();
+  // TextEditingController emailver = TextEditingController();
+  // TextEditingController ifefrente = TextEditingController();
+
+  Gender? _selectedGender;
+
+  //  late int sex, genero;
+
+  //    try {
+  //     if (_selectedGender == null) {
+  //       SnackBar snackBar = const SnackBar(
+  //         content: Text("Selecciona algun genero"),
+  //         duration: Duration(seconds: 2),
+  //       );
+  //       ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  //       return;
+  //     } else if (_selectedGender == Gender.femenino) {
+  //       sex = 0;
+  //     } else {
+  //       sex = 1;
+  //     }
+  //       genero = int.parse(_nombre.text);
+  //      } catch (e) {
+  //     print(e.toString());
+  //     SnackBar snackBar = const SnackBar(
+  //       content: Text("Error!"),
+  //       duration: Duration(seconds: 2),
+  //     );
+  //     ScaffoldMessenger.of(context).showSnackBar(snackBar);
+
+  //     return;
+  //   }
 
   @override
   Widget build(BuildContext context) {
     final _keyForm = GlobalKey<FormState>();
-    TextEditingController nombre = TextEditingController();
-    TextEditingController paterno = TextEditingController();
-    TextEditingController materno = TextEditingController();
-    TextEditingController genero = TextEditingController();
-    TextEditingController nacimiento = TextEditingController();
-    TextEditingController email = TextEditingController();
-    TextEditingController movil = TextEditingController();
-    TextEditingController curp = TextEditingController();
-    TextEditingController rfc = TextEditingController();
-    TextEditingController domicilio = TextEditingController();
-    //TextEditingController confirmcontrasena = TextEditingController();
-    // TextEditingController contrasena = TextEditingController();
-    TextEditingController estado = TextEditingController();
-    TextEditingController alcaldia = TextEditingController();
-    TextEditingController cp = TextEditingController();
-    TextEditingController ingreso = TextEditingController();
-    //TextEditingController ingresoTipo = TextEditingController();
-    // TextEditingController fueSerPub = TextEditingController();
-    // TextEditingController parSerpub = TextEditingController();
-    // TextEditingController emailver = TextEditingController();
-    // TextEditingController movilver = TextEditingController();
 
     //DateTime _dateTime = DateTime.now();
 
@@ -57,13 +80,6 @@ class _RegisterViewState extends State<RegisterView> {
           firstDate: DateTime(2000),
           lastDate: DateTime(2025));
     }
-// GENERO
-    // _MyFormState() {
-    //   _selectedVal = _productDizesList[0];
-    // }
-
-    // bool fueserpub = false;
-    // bool parserpub = false;
 
     return Scaffold(
         body: ListView(
@@ -104,7 +120,7 @@ class _RegisterViewState extends State<RegisterView> {
                         height: 15,
                       ),
                       TextFormField(
-                        controller: nombre,
+                        controller: _nombre,
                         validator: (String? valor) {
                           if (valor == null || valor.isEmpty) {
                             return 'Nombre vacio';
@@ -249,7 +265,7 @@ class _RegisterViewState extends State<RegisterView> {
                       // ),
                       // Email Input
                       TextFormField(
-                        controller: genero,
+                        controller: _genero,
                         validator: (String? valor) {
                           if (valor == null || valor.isEmpty) {
                             return 'Campo vacio';
@@ -267,6 +283,63 @@ class _RegisterViewState extends State<RegisterView> {
                           border: OutlineInputBorder(),
                           isDense: false,
                           contentPadding: EdgeInsets.all(10),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 5,
+                      ),
+
+                      Text(
+                        'Genero',
+                        textAlign: TextAlign.center,
+                        style: GoogleFonts.poppins(
+                            textStyle: const TextStyle(
+                                color: Colors.black87,
+                                fontSize: 20,
+                                fontWeight: FontWeight.w400)),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 15),
+                        child: Row(
+                          children: [
+                            Radio<Gender>(
+                              value: Gender.femenino,
+                              groupValue: _selectedGender,
+                              onChanged: (value) {
+                                setState(() {
+                                  _selectedGender = value;
+                                });
+                              },
+                            ),
+                            Text(
+                              'Femenino',
+                              textAlign: TextAlign.center,
+                              style: GoogleFonts.poppins(
+                                  textStyle: const TextStyle(
+                                color: Colors.black87,
+                                fontSize: 20,
+                                fontWeight: FontWeight.w400,
+                              )),
+                            ),
+                            Radio<Gender>(
+                              value: Gender.masculino,
+                              groupValue: _selectedGender,
+                              onChanged: (value) {
+                                setState(() {
+                                  _selectedGender = value;
+                                });
+                              },
+                            ),
+                            Text(
+                              'Masculino',
+                              textAlign: TextAlign.center,
+                              style: GoogleFonts.poppins(
+                                  textStyle: const TextStyle(
+                                      color: Colors.black87,
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.w400)),
+                            )
+                          ],
                         ),
                       ),
 
@@ -322,29 +395,7 @@ class _RegisterViewState extends State<RegisterView> {
                         height: 5,
                       ),
                       // Email Input
-                      TextFormField(
-                        controller: movil,
-                        validator: (String? valor) {
-                          if (valor == null || valor.isEmpty) {
-                            return 'Campo vacio';
-                          }
-                          if (valor.length <= 9) {
-                            return 'Numero demasiado corto';
-                          }
-                          return null;
-                        },
-                        keyboardType: TextInputType.number,
-                        decoration: const InputDecoration(
-                          labelText: 'Telefono',
-                          helperText: '+52 xxxx xxxx xx',
-                          border: OutlineInputBorder(),
-                          isDense: false,
-                          contentPadding: EdgeInsets.all(10),
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 5,
-                      ),
+
                       // Email Input
                       TextFormField(
                         controller: curp,
@@ -557,16 +608,16 @@ class _RegisterViewState extends State<RegisterView> {
                                   cp: cp.text,
                                   rfc: rfc.text,
                                   domicilio: domicilio.text,
-                                  ingreso: ingreso.text,
+                                  // ingreso: ingreso.text,
                                   curp: curp.text,
-                                  email: email.text,
+                                  //  email: email.text,
                                   estado: estado.text,
-                                  genero: genero.text,
+                                  genero: _genero.text,
                                   materno: materno.text,
-                                  movil: movil.text,
-                                  nombre: nombre.text,
+                                  // movil: movil.text,
+                                  nombre: _nombre.text,
                                   paterno: paterno.text,
-                                  alcaldia: alcaldia.text,
+                                  // alcaldia: alcaldia.text,
                                   createdAt: null,
                                   nacimiento: null,
                                   updatedAt: null);

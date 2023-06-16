@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 
+import '../models/user.provider.dart';
+import '../services/servides.dart';
 import '../utils/global.colors.dart';
 
 class VerifyPage extends StatelessWidget {
   VerifyPage({super.key});
   final TextEditingController email = TextEditingController();
-  final TextEditingController contrasena = TextEditingController();
 
   final _keyForm = GlobalKey<FormState>();
   @override
@@ -57,24 +58,51 @@ class VerifyPage extends StatelessWidget {
                     height: 15,
                   ),
                   // Email Input
-                  TextFormField(
-                    controller: email,
-                    validator: (valor) {
-                      String pattern =
-                          r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
-                      RegExp regExp = new RegExp(pattern);
+                  GestureDetector(
+                    onTap: () async {
+                      Navigator.pushNamed(context, 'OtpForm');
+                      var id = 27;
+                      var post =
+                          Data(movil: email.text, cp: null, estado: null);
 
-                      return regExp.hasMatch(valor ?? '')
-                          ? null
-                          : 'El correo no es correcto';
+                      var response = await BaseClient()
+                          .put('/pospecto/$id', post.toJson())
+                          .catchError((err) {
+                        debugPrint(err.toString());
+                      });
+                      if (response == null) return;
+                      debugPrint('succesful');
+                      debugPrint(response.toString());
+                      if (_keyForm.currentState!.validate()) {
+                        print('Validacion exitosa');
+                      } else {
+                        print('Ha ocurrido un error');
+                      }
+                      if (_keyForm.currentState!.validate()) {
+                        print('Validacion exitosa');
+                      } else {
+                        print('Ha ocurrido un error');
+                      }
                     },
-                    keyboardType: TextInputType.emailAddress,
-                    decoration: const InputDecoration(
-                      labelText: 'Email',
-                      helperText: 'correo@correo.com',
-                      border: OutlineInputBorder(),
-                      isDense: false,
-                      contentPadding: EdgeInsets.all(10),
+                    child: TextFormField(
+                      controller: email,
+                      validator: (valor) {
+                        String pattern =
+                            r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
+                        RegExp regExp = new RegExp(pattern);
+
+                        return regExp.hasMatch(valor ?? '')
+                            ? null
+                            : 'El correo no es correcto';
+                      },
+                      keyboardType: TextInputType.emailAddress,
+                      decoration: const InputDecoration(
+                        labelText: 'Email',
+                        helperText: 'correo@correo.com',
+                        border: OutlineInputBorder(),
+                        isDense: false,
+                        contentPadding: EdgeInsets.all(10),
+                      ),
                     ),
                   ),
                   Center(

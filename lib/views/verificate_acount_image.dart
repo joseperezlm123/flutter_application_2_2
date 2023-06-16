@@ -1,8 +1,11 @@
 import 'dart:io';
 
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_application_2_2/services/select_image.dart';
 import 'package:image_picker/image_picker.dart';
+
+import '../models/user.provider.dart';
+import '../services/servides.dart';
 
 class VerificateAcount extends StatefulWidget {
   const VerificateAcount({super.key});
@@ -125,101 +128,158 @@ class _VerificateAcountState extends State<VerificateAcount> {
   }
 
   File? imagen = null;
+
+  Dio dio = new Dio();
+
+  Future<void> subir_imagen() async {
+    try {
+      String filename = imagen!.path.split('/').last;
+
+      FormData formData = new FormData.fromMap({
+        'file': await MultipartFile.fromFile(imagen!.path, filename: filename)
+      });
+
+      await dio
+          .put('http://idemo.brave.com.mx/api/pospecto', data: formData)
+          .then((value) {
+        if (value.toString() == '1') {
+          print('La foto se subio correctamente');
+        } else {
+          print('Hubo un error');
+        }
+      });
+    } catch (e) {
+      print(e.toString());
+    }
+  }
+
+  final _keyForm = GlobalKey<FormState>();
+  TextEditingController ifefrente = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.white,
-        appBar: AppBar(
-          title: const Text('Tus datos'),
-        ),
-        body: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: Column(
-              children: [
-                const Padding(
-                  padding: EdgeInsets.all(12.0),
-                  child: Text(
-                    'Sube un comprobante de tu domicilio particular actual',
-                    textAlign: TextAlign.center,
-                  ),
+      backgroundColor: Colors.white,
+      appBar: AppBar(
+        title: const Text('Tus datos'),
+      ),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          child: Column(
+            children: [
+              const Padding(
+                padding: EdgeInsets.all(12.0),
+                child: Text(
+                  'Sube un comprobante de tu domicilio particular actual',
+                  textAlign: TextAlign.center,
                 ),
-                const SizedBox(
-                  height: 10,
-                ),
-                const Text('Puedes usar:'),
-                const SizedBox(
-                  height: 20,
-                ),
-                const Text('-Foto de tu INE por enfrente'),
-                const SizedBox(
-                  height: 20,
-                ),
-                imagen_to_upload != null
-                    ? Image.file(imagen_to_upload!)
-                    : Container(
-                        margin: const EdgeInsets.all(10),
-                        height: 200,
-                        width: double.infinity,
-                        color: Colors.grey[200],
-                      ),
-                const SizedBox(
-                  height: 5,
-                ),
-                ElevatedButton(
-                    onPressed: () async {
-                      final imagen = await getImage();
-                      setState(() {
-                        imagen_to_upload = File(imagen!.path);
-                      });
-                    },
-                    child: const Text('Seleccionar Comprobante')),
-                const SizedBox(
-                  height: 20,
-                ),
-                const Text('-Foto de tu INE por detras'),
-                const SizedBox(
-                  height: 20,
-                ),
-                imagen_to_upload != null
-                    ? Image.file(imagen_to_upload!)
-                    : Container(
-                        margin: const EdgeInsets.all(10),
-                        height: 200,
-                        width: double.infinity,
-                        color: Colors.grey[200],
-                      ),
-                const SizedBox(
-                  height: 5,
-                ),
-                ElevatedButton(
-                    onPressed: () async {
-                      final imagen = await getImage();
-                      setState(() {
-                        imagen_to_upload = File(imagen!.path);
-                      });
-                    },
-                    child: const Text('Seleccionar Comprobante')),
-                const SizedBox(
-                  height: 5,
-                ),
-                ElevatedButton(
-                    onPressed: () {}, child: const Text('Subir Comprobante')),
-                ElevatedButton(
-                    onPressed: () {
-                      opciones(context);
-                    },
-                    child: Text('Selecciona una imagen')),
-                SizedBox(
-                  height: 20,
-                ),
-                imagen == null ? Center() : Image.file(imagen!),
-                SizedBox(
-                  height: 20,
-                ),
-              ],
-            ),
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              const Text('Puedes usar:'),
+              const SizedBox(
+                height: 20,
+              ),
+              const Text('-Foto de tu INE por enfrente'),
+              const SizedBox(
+                height: 20,
+              ),
+              // ElevatedButton(
+              //     onPressed: () async {
+              //       final imagen = await getImage();
+              //       setState(() {
+              //         imagen_to_upload = File(imagen!.path);
+              //       });
+              //     },
+              //     child: const Text('Seleccionar Comprobante')),
+              // const SizedBox(
+              //   height: 20,
+              // ),
+              // const Text('-Foto de tu INE por detras'),
+              // const SizedBox(
+              //   height: 20,
+              // ),
+              // imagen_to_upload != null
+              //     ? Image.file(imagen_to_upload!)
+              //     : Container(
+              //         margin: const EdgeInsets.all(10),
+              //         height: 200,
+              //         width: double.infinity,
+              //         color: Colors.grey[200],
+              //       ),
+              // const SizedBox(
+              //   height: 5,
+              // ),
+              // ElevatedButton(
+              //     onPressed: () async {
+              //       final imagen = await getImage();
+              //       setState(() {
+              //         imagen_to_upload = File(imagen!.path);
+              //       });
+              //     },
+              //     child: const Text('Seleccionar Comprobante')),
+              // const SizedBox(
+              //   height: 5,
+              // ),
+              // ElevatedButton(
+              //     onPressed: () {}, child: const Text('Subir Comprobante')),
+              ElevatedButton(
+                  onPressed: () {
+                    opciones(context);
+                  },
+                  child: const Text(
+                    'Selecciona una imagen',
+                    style: TextStyle(color: Colors.white),
+                  )),
+              const SizedBox(
+                height: 20,
+              ),
+              ElevatedButton(
+                  onPressed: () async {
+                    subir_imagen();
+                    Navigator.pushNamed(context, 'OtpForm');
+                    var id = 27;
+                    var post = Data(
+                        movil: null,
+                        ifefrente: ifefrente.text,
+                        cp: null,
+                        estado: null);
+
+                    var response = await BaseClient()
+                        .put('/pospecto/$id', post.toJson())
+                        .catchError((err) {
+                      debugPrint(err.toString());
+                    });
+                    if (response == null) return;
+                    debugPrint('succesful');
+                    debugPrint(response.toString());
+                    if (_keyForm.currentState!.validate()) {
+                      print('Validacion exitosa');
+                    } else {
+                      print('Ha ocurrido un error');
+                    }
+                    if (_keyForm.currentState!.validate()) {
+                      print('Validacion exitosa');
+                    } else {
+                      print('Ha ocurrido un error');
+                    }
+                  },
+                  child: const Text(
+                    'Subir Imagen',
+                    style: TextStyle(color: Colors.white),
+                  )),
+              const SizedBox(
+                height: 20,
+              ),
+              imagen == null ? const Center() : Image.file(imagen!),
+              const SizedBox(
+                height: 10,
+              ),
+            ],
           ),
-        ));
+        ),
+      ),
+    );
   }
 }
