@@ -60,6 +60,15 @@ class PhoneVerifyPage extends StatelessWidget {
                   ),
                   // Email Input
                   TextFormField(
+                    validator: (valor) {
+                      String pattern =
+                          r'^\s*(?:\+?(\d{1,3}))?[-. (]*(\d{3})[-. )]*(\d{3})[-. ]*(\d{4})(?: *x(\d+))?\s*$';
+                      RegExp regExp = new RegExp(pattern);
+
+                      return regExp.hasMatch(valor ?? '')
+                          ? null
+                          : 'El CURP no es valido';
+                    },
                     controller: movil,
                     keyboardType: TextInputType.number,
                     decoration: const InputDecoration(

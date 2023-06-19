@@ -10,10 +10,10 @@ class OtpForm extends StatelessWidget {
       backgroundColor: Colors.white,
       body: Column(
         children: [
-          SizedBox(
+          const SizedBox(
             height: 200,
           ),
-          Text('Ingresa la combinacion que mandamos a tu correo '),
+          const Text('Ingresa la combinacion que mandamos a tu SMS'),
           Form(
             child: SizedBox(
               height: 200,
@@ -108,7 +108,7 @@ class OtpForm extends StatelessWidget {
               onPressed: () {
                 Navigator.pushNamed(context, 'VerifyPage');
               },
-              child: Text('Validar'))
+              child: const Text('Validar'))
         ],
       ),
     );

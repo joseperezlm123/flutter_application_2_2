@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../models/user.provider.dart';
 import '../services/servides.dart';
@@ -266,6 +267,7 @@ class _RegisterViewState extends State<RegisterView> {
                       // Email Input
                       TextFormField(
                         controller: _genero,
+                        maxLength: 1,
                         validator: (String? valor) {
                           if (valor == null || valor.isEmpty) {
                             return 'Campo vacio';
@@ -279,7 +281,7 @@ class _RegisterViewState extends State<RegisterView> {
                         obscureText: false,
                         decoration: const InputDecoration(
                           labelText: 'Genero',
-                          helperText: 'Masculino/Femenino',
+                          helperText: 'M/F',
                           border: OutlineInputBorder(),
                           isDense: false,
                           contentPadding: EdgeInsets.all(10),
@@ -371,26 +373,27 @@ class _RegisterViewState extends State<RegisterView> {
                         height: 5,
                       ),
                       // Email Input
-                      TextFormField(
-                        controller: email,
-                        validator: (valor) {
-                          String pattern =
-                              r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
-                          RegExp regExp = new RegExp(pattern);
+                      // TextFormField(
+                      //   controller: email,
+                      //   maxLength: 64,
+                      //   validator: (valor) {
+                      //     String pattern =
+                      //         r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
+                      //     RegExp regExp = new RegExp(pattern);
 
-                          return regExp.hasMatch(valor ?? '')
-                              ? null
-                              : 'El correo no es correcto';
-                        },
-                        keyboardType: TextInputType.emailAddress,
-                        decoration: const InputDecoration(
-                          labelText: 'Email',
-                          helperText: 'correo@correo.com',
-                          border: OutlineInputBorder(),
-                          isDense: false,
-                          contentPadding: EdgeInsets.all(10),
-                        ),
-                      ),
+                      //     return regExp.hasMatch(valor ?? '')
+                      //         ? null
+                      //         : 'El correo no es correcto';
+                      //   },
+                      //   keyboardType: TextInputType.emailAddress,
+                      //   decoration: const InputDecoration(
+                      //     labelText: 'Email',
+                      //     helperText: 'correo@correo.com',
+                      //     border: OutlineInputBorder(),
+                      //     isDense: false,
+                      //     contentPadding: EdgeInsets.all(10),
+                      //   ),
+                      // ),
                       const SizedBox(
                         height: 5,
                       ),
@@ -398,15 +401,19 @@ class _RegisterViewState extends State<RegisterView> {
 
                       // Email Input
                       TextFormField(
+                        maxLength: 18,
                         controller: curp,
-                        validator: (String? valor) {
-                          if (valor == null || valor.isEmpty) {
-                            return 'Nombre vacio';
-                          }
-                          if (valor.length <= 14) {
-                            return 'Nombre demasiado corto';
-                          }
-                          return null;
+                        inputFormatters: [
+                          FilteringTextInputFormatter.digitsOnly
+                        ],
+                        validator: (valor) {
+                          String pattern =
+                              r"^([A-Z][AEIOUX][A-Z]{2}\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])[HM](?:AS|B[CS]|C[CLMSH]|D[FG]|G[TR]|HG|JC|M[CNS]|N[ETL]|OC|PL|Q[TR]|S[PLR]|T[CSL]|VZ|YN|ZS)[B-DF-HJ-NP-TV-Z]{3}[A-Z\d])(\d)$";
+                          RegExp regExp = new RegExp(pattern);
+
+                          return regExp.hasMatch(valor ?? '')
+                              ? null
+                              : 'El CURP no es valido';
                         },
                         keyboardType: TextInputType.multiline,
                         decoration: const InputDecoration(
@@ -421,15 +428,19 @@ class _RegisterViewState extends State<RegisterView> {
                       ),
                       // Email Input
                       TextFormField(
+                        inputFormatters: [
+                          //  FilteringTextInputFormatter.digitsOnly
+                        ],
+                        maxLength: 13,
                         controller: rfc,
                         validator: (valor) {
-                          if (valor!.isEmpty) {
-                            return 'RFC vacio';
-                          }
-                          if (valor.length < 5 || valor.length > 15) {
-                            return 'RFC no es valido';
-                          }
-                          return null;
+                          String pattern =
+                              r'^(([ÑA-Z|ña-z|&]{3}|[A-Z|a-z]{4})\d{2}((0[1-9]|1[012])(0[1-9]|1\d|2[0-8])|(0[13456789]|1[012])(29|30)|(0[13578]|1[02])31)(\w{2})([A|a|0-9]{1}))$|^(([ÑA-Z|ña-z|&]{3}|[A-Z|a-z]{4})([02468][048]|[13579][26])0229)(\w{2})([A|a|0-9]{1})$';
+                          RegExp regExp = new RegExp(pattern);
+
+                          return regExp.hasMatch(valor ?? '')
+                              ? null
+                              : 'El RFC no es valido';
                         },
                         keyboardType: TextInputType.text,
                         decoration: const InputDecoration(
@@ -516,13 +527,12 @@ class _RegisterViewState extends State<RegisterView> {
                       TextFormField(
                         controller: cp,
                         validator: (valor) {
-                          if (valor!.isEmpty) {
-                            return 'Campo vacio';
-                          }
-                          if (valor.length < 5 || valor.length > 15) {
-                            return 'El codigo postal no es valido';
-                          }
-                          return null;
+                          String pattern = r'^\d{4,5}$';
+                          RegExp regExp = new RegExp(pattern);
+
+                          return regExp.hasMatch(valor ?? '')
+                              ? null
+                              : 'El RFC no es valido';
                         },
                         keyboardType: TextInputType.text,
                         decoration: const InputDecoration(

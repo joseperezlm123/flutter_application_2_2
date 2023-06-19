@@ -60,7 +60,7 @@ class VerifyPage extends StatelessWidget {
                   // Email Input
                   GestureDetector(
                     onTap: () async {
-                      Navigator.pushNamed(context, 'OtpForm');
+                      //Navigator.pushNamed(context, 'OtpForm');
                       var id = 27;
                       var post =
                           Data(movil: email.text, cp: null, estado: null);

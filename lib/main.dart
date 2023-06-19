@@ -40,7 +40,7 @@ class App extends StatelessWidget {
         'VerifyPage': (context) => VerifyPage(),
         'PhoneVerifyPage': (context) => PhoneVerifyPage(),
         'OtpForm': (context) => const OtpForm(),
-        'EmailForm': (context) => const EmailForm(),
+        'EmailForm': (context) => EmailForm(),
         'VerificateAcount': (context) => const VerificateAcount(),
       },
     );
