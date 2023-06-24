@@ -13,7 +13,13 @@ class OtpForm extends StatelessWidget {
           const SizedBox(
             height: 200,
           ),
-          const Text('Ingresa la combinacion que mandamos a tu SMS'),
+          const Text(
+            'Ingresa la combinacion que mandamos a tu SMS',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontSize: 24,
+            ),
+          ),
           Form(
             child: SizedBox(
               height: 200,
@@ -108,7 +114,10 @@ class OtpForm extends StatelessWidget {
               onPressed: () {
                 Navigator.pushNamed(context, 'VerifyPage');
               },
-              child: const Text('Validar'))
+              child: const Text(
+                'Validar',
+                style: TextStyle(fontSize: 18),
+              ))
         ],
       ),
     );

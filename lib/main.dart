@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_2_2/views/verificate_acount_imagen2.dart';
 import 'package:get/get.dart';
 import 'componentes/agregar_nueva_tarjeta.dart';
 import 'componentes/solicitar_credito.dart';
@@ -42,6 +43,7 @@ class App extends StatelessWidget {
         'OtpForm': (context) => const OtpForm(),
         'EmailForm': (context) => EmailForm(),
         'VerificateAcount': (context) => const VerificateAcount(),
+        'VerificateAcount2': (context) => const VerificateAcount2(),
       },
     );
   }

@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 
-import '../models/user.provider.dart';
-import '../services/servides.dart';
 import '../utils/global.colors.dart';
 
 class VerifyPage extends StatelessWidget {
   VerifyPage({super.key});
   final TextEditingController email = TextEditingController();
+  final TextEditingController nombre = TextEditingController();
 
   final _keyForm = GlobalKey<FormState>();
   @override
@@ -61,28 +60,6 @@ class VerifyPage extends StatelessWidget {
                   GestureDetector(
                     onTap: () async {
                       //Navigator.pushNamed(context, 'OtpForm');
-                      var id = 27;
-                      var post =
-                          Data(movil: email.text, cp: null, estado: null);
-
-                      var response = await BaseClient()
-                          .put('/pospecto/$id', post.toJson())
-                          .catchError((err) {
-                        debugPrint(err.toString());
-                      });
-                      if (response == null) return;
-                      debugPrint('succesful');
-                      debugPrint(response.toString());
-                      if (_keyForm.currentState!.validate()) {
-                        print('Validacion exitosa');
-                      } else {
-                        print('Ha ocurrido un error');
-                      }
-                      if (_keyForm.currentState!.validate()) {
-                        print('Validacion exitosa');
-                      } else {
-                        print('Ha ocurrido un error');
-                      }
                     },
                     child: TextFormField(
                       controller: email,
@@ -105,33 +82,64 @@ class VerifyPage extends StatelessWidget {
                       ),
                     ),
                   ),
-                  Center(
-                    child: ElevatedButton(
-                        style: const ButtonStyle(
-                          backgroundColor:
-                              MaterialStatePropertyAll<Color>(Colors.red),
-                        ),
-                        onPressed: () {
-                          Navigator.pushNamed(context, 'EmailForm');
+                  // Center(
+                  //   child: ElevatedButton(
+                  //       style: const ButtonStyle(
+                  //         backgroundColor:
+                  //             MaterialStatePropertyAll<Color>(Colors.red),
+                  //       ),
+                  //       onPressed: () async {
+                  //         //Navigator.pushNamed(context, 'EmailForm');
+                  //         var id = 53;
+                  //         var user = Data(email: email.text);
+                  //         var response = await BaseClient()
+                  //             .put('/$id', user)
+                  //             .catchError((err) {});
+                  //         if (response == null) return;
+                  //         debugPrint('Succesful :');
+                  //       },
+                  //       child: const Column(
+                  //         children: [
+                  //           Text(
+                  //             'Inicio',
+                  //             style: TextStyle(
+                  //               fontSize: 15,
+                  //             ),
+                  //           ),
+                  //         ],
+                  //       )),
+                  // ),
+                  // AppButton(
+                  //   operation: 'GET',
+                  //   operationColor: Colors.green,
+                  //   description: 'Nombres',
+                  //   onPressed: () async {
+                  //     var response =
+                  //         await BaseClient().get('/').catchError((err) {});
+                  //     if (response == null) return;
+                  //     debugPrint('successful');
 
-                          if (_keyForm.currentState!.validate()) {
-                            print('Validacion exitosa');
-                          } else {
-                            print('Ha ocurrido un error');
-                          }
-                          // Navigator.pushNamed(context, 'HomeScreen');
-                        },
-                        child: const Column(
-                          children: [
-                            Text(
-                              'Inicio',
-                              style: TextStyle(
-                                fontSize: 15,
-                              ),
-                            ),
-                          ],
-                        )),
-                  ),
+                  //     var users = postFromJson(response);
+                  //     debugPrint('Users count :' + users.toString());
+                  //   },
+                  // ),
+                  // AppButton(
+                  //   operation: 'PUT',
+                  //   operationColor: Colors.black,
+                  //   description: 'Editar usuario',
+                  //   onPressed: () async {
+                  //     var id = 1;
+                  //     var put = Data(
+                  //       nombre: 'Juan',
+                  //       updatedAt: null,
+                  //     );
+                  //     var response = await BaseClient()
+                  //         .put('/$id', put)
+                  //         .catchError((err) {});
+                  //     if (response == null) return;
+                  //     debugPrint('successful: ');
+                  //   },
+                  // )
                 ],
               ),
             ),

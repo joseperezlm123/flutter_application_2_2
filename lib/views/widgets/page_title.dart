@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 class PageTitle extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -11,9 +10,21 @@ class PageTitle extends StatelessWidget {
         child: const Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('Bienvenido a Exitus Credit', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white),),
-           SizedBox(height: 10),
-            Text('Algunas opciones  ',style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.white),)
+            Text(
+              'Bienvenido a Exitus Credit',
+              style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white),
+            ),
+            SizedBox(height: 10),
+            Text(
+              'Algunas opciones  ',
+              style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white),
+            )
           ],
         ),
       ),

@@ -18,6 +18,8 @@ class SplashView extends StatelessWidget {
       body: Center(
         child: Image.asset(
           'assets/images/exitus1.png',
+          width: 80,
+          alignment: Alignment.center,
         ),
       ),
     );

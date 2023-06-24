@@ -1,15 +1,39 @@
-import 'package:flutter/material.dart';
+import 'dart:convert';
 
-import '../models/user.provider.dart';
-import '../services/servides.dart';
+import 'package:http/http.dart' as http;
+import 'package:flutter/material.dart';
 import '../utils/global.colors.dart';
 
-class PhoneVerifyPage extends StatelessWidget {
+class PhoneVerifyPage extends StatefulWidget {
   PhoneVerifyPage({super.key});
 
+  @override
+  State<PhoneVerifyPage> createState() => _PhoneVerifyPageState();
+}
+
+class _PhoneVerifyPageState extends State<PhoneVerifyPage> {
   final _keyForm = GlobalKey<FormState>();
 
-  final TextEditingController movil = TextEditingController();
+  TextEditingController movil = TextEditingController();
+  TextEditingController nombre = TextEditingController();
+  TextEditingController _controller = TextEditingController();
+  Future<dynamic> updateAlbum(dynamic object, String nombre) async {
+    final response = await http.put(
+      Uri.parse('http://idemo.brave.com.mx/api/pospecto'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(<String, String>{
+        'title': nombre,
+      }),
+    );
+    if (response.statusCode == 200) {
+      return object.fromJson(jsonDecode(response.body));
+    } else {
+      throw Exception('Failed to load album');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -67,7 +91,7 @@ class PhoneVerifyPage extends StatelessWidget {
 
                       return regExp.hasMatch(valor ?? '')
                           ? null
-                          : 'El CURP no es valido';
+                          : 'El Telefono no es valido';
                     },
                     controller: movil,
                     keyboardType: TextInputType.number,
@@ -86,29 +110,9 @@ class PhoneVerifyPage extends StatelessWidget {
                               MaterialStatePropertyAll<Color>(Colors.blue),
                         ),
                         onPressed: () async {
-                          Navigator.pushNamed(context, 'OtpForm');
-                          var id = 27;
-                          var post =
-                              Data(movil: movil.text, cp: null, estado: null);
-
-                          var response = await BaseClient()
-                              .put('/pospecto/$id', post.toJson())
-                              .catchError((err) {
-                            debugPrint(err.toString());
+                          setState(() {
+                            _futureAlbum = updateAlbum(_controller.text);
                           });
-                          if (response == null) return;
-                          debugPrint('succesful');
-                          debugPrint(response.toString());
-                          if (_keyForm.currentState!.validate()) {
-                            print('Validacion exitosa');
-                          } else {
-                            print('Ha ocurrido un error');
-                          }
-                          if (_keyForm.currentState!.validate()) {
-                            print('Validacion exitosa');
-                          } else {
-                            print('Ha ocurrido un error');
-                          }
                         },
                         child: const Column(
                           children: [
@@ -130,3 +134,5 @@ class PhoneVerifyPage extends StatelessWidget {
     );
   }
 }
+
+late Future<dynamic> _futureAlbum;

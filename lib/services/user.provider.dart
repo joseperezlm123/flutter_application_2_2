@@ -30,18 +30,18 @@ class Post {
 
 class Data {
   String? nombre;
-  String? paterno;
-  String? materno;
-  String? genero;
-  DateTime? nacimiento;
-  String? email;
+  dynamic paterno;
+  dynamic materno;
+  dynamic genero;
+  dynamic nacimiento;
+  dynamic email;
   String? movil;
-  String? curp;
+  dynamic curp;
   dynamic rfc;
   dynamic domicilio;
-  String? estado;
+  dynamic estado;
   dynamic alcaldia;
-  String? cp;
+  dynamic cp;
   dynamic ifefrente;
   dynamic ifetras;
   dynamic foto;
@@ -51,7 +51,7 @@ class Data {
   dynamic parServpub;
   dynamic emailver;
   dynamic movilver;
-  DateTime? createdAt;
+  dynamic createdAt;
   DateTime? updatedAt;
 
   Data({
@@ -65,9 +65,9 @@ class Data {
     this.curp,
     this.rfc,
     this.domicilio,
-    required this.estado,
+    this.estado,
     this.alcaldia,
-    required this.cp,
+    this.cp,
     this.ifefrente,
     this.ifetras,
     this.foto,
@@ -86,7 +86,7 @@ class Data {
         paterno: json["paterno"],
         materno: json["materno"],
         genero: json["genero"],
-        nacimiento: DateTime.parse(json["nacimiento"]),
+        nacimiento: json["nacimiento"],
         email: json["email"],
         movil: json["movil"],
         curp: json["curp"],
@@ -104,8 +104,8 @@ class Data {
         parServpub: json["par_servpub"],
         emailver: json["emailver"],
         movilver: json["movilver"],
-        createdAt: DateTime.parse(json["created_At"]),
-        updatedAt: DateTime.parse(json["updated_At"]),
+        createdAt: json["created_at"],
+        updatedAt: DateTime.parse(json["updated_at"]),
       );
 
   Map<String, dynamic> toJson() => {
@@ -114,7 +114,6 @@ class Data {
         "materno": materno,
         "genero": genero,
         "nacimiento": nacimiento,
-        // "${nacimiento.year.toString().padLeft(4, '0')}-${nacimiento.month.toString().padLeft(2, '0')}-${nacimiento.day.toString().padLeft(2, '0')}",
         "email": email,
         "movil": movil,
         "curp": curp,
@@ -133,6 +132,6 @@ class Data {
         "emailver": emailver,
         "movilver": movilver,
         "created_at": createdAt,
-        "updated_at": updatedAt,
+        "updated_at": updatedAt?.toIso8601String(),
       };
 }

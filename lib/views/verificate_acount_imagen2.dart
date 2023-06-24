@@ -7,16 +7,14 @@ import 'package:image_picker/image_picker.dart';
 import '../services/user.provider.dart';
 import '../services/servides.dart';
 
-class VerificateAcount extends StatefulWidget {
-  const VerificateAcount({super.key});
+class VerificateAcount2 extends StatefulWidget {
+  const VerificateAcount2({super.key});
 
-  // TextEditingController ifefrente = TextEditingController();
   @override
-  State<VerificateAcount> createState() => _VerificateAcountState();
+  State<VerificateAcount2> createState() => _VerificateAcountState();
 }
 
-class _VerificateAcountState extends State<VerificateAcount> {
-  // TextEditingController ifefrente = TextEditingController();
+class _VerificateAcountState extends State<VerificateAcount2> {
   opciones(context) {
     showDialog(
         context: context,
@@ -157,7 +155,6 @@ class _VerificateAcountState extends State<VerificateAcount> {
 
   final _keyForm = GlobalKey<FormState>();
   TextEditingController ifefrente = TextEditingController();
-  TextEditingController nombre = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -186,10 +183,50 @@ class _VerificateAcountState extends State<VerificateAcount> {
                 const SizedBox(
                   height: 20,
                 ),
-                const Text('-Foto de tu INE por enfrente'),
+                const Text('-Foto de tu INE por detras'),
                 const SizedBox(
                   height: 20,
                 ),
+                // ElevatedButton(
+                //     onPressed: () async {
+                //       final imagen = await getImage();
+                //       setState(() {
+                //         imagen_to_upload = File(imagen!.path);
+                //       });
+                //     },
+                //     child: const Text('Seleccionar Comprobante')),
+                // const SizedBox(
+                //   height: 20,
+                // ),
+                // const Text('-Foto de tu INE por detras'),
+                // const SizedBox(
+                //   height: 20,
+                // ),
+                // imagen_to_upload != null
+                //     ? Image.file(imagen_to_upload!)
+                //     : Container(
+                //         margin: const EdgeInsets.all(10),
+                //         height: 200,
+                //         width: double.infinity,
+                //         color: Colors.grey[200],
+                //       ),
+                // const SizedBox(
+                //   height: 5,
+                // ),
+                // ElevatedButton(
+                //     onPressed: () async {
+                //       final imagen = await getImage();
+                //       setState(() {
+                //         imagen_to_upload = File(imagen!.path);
+                //       });
+                //     },
+                //     child: const Text('Seleccionar Comprobante')),
+                // const SizedBox(
+                //   height: 5,
+                // ),
+                // ElevatedButton(
+                //     onPressed: () {}, child: const Text('Subir Comprobante')),
+
                 imagen == null ? const Center() : Image.file(imagen!),
                 const SizedBox(
                   height: 10,
@@ -208,18 +245,34 @@ class _VerificateAcountState extends State<VerificateAcount> {
                 ElevatedButton(
                     onPressed: () async {
                       subir_imagen();
+                      Navigator.pushNamed(context, 'VerificateAcount2');
                       var id = 27;
                       var put = Data(
-                          ifefrente: ifefrente.toString(),
-                          nombre: 'JoseLuis',
-                          movil: '',
+                          movil: null,
+                          ifefrente: ifefrente.text,
+                          cp: null,
+                          estado: null,
+                          nombre: '',
                           updatedAt: null);
 
                       var response = await BaseClient()
-                          .put('/$id', put)
-                          .catchError((err) {});
+                          .put('/$id', put.toJson())
+                          .catchError((err) {
+                        debugPrint(err.toString());
+                      });
                       if (response == null) return;
-                      debugPrint('successful: ');
+                      debugPrint('succesful');
+                      debugPrint(response.toString());
+                      if (_keyForm.currentState!.validate()) {
+                        print('Validacion exitosa');
+                      } else {
+                        print('Ha ocurrido un error');
+                      }
+                      if (_keyForm.currentState!.validate()) {
+                        print('Validacion exitosa');
+                      } else {
+                        print('Ha ocurrido un error');
+                      }
                     },
                     child: const Text(
                       'Subir Imagen',

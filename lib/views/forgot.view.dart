@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import '../utils/global.colors.dart';
-import 'widgets/button.global.dart';
-import 'widgets/text.form.globar.dart';
 
 class ForgotView extends StatelessWidget {
   ForgotView({super.key});
@@ -53,11 +51,8 @@ class ForgotView extends StatelessWidget {
                   height: 15,
                 ),
                 // Email Input
-                TextFormGlobal(
+                TextFormField(
                   controller: emailController,
-                  text: 'Email',
-                  obscure: false,
-                  textInputType: TextInputType.emailAddress,
                 ),
                 const SizedBox(
                   height: 10,
@@ -66,10 +61,6 @@ class ForgotView extends StatelessWidget {
                   onTap: () {
                     Navigator.pop(context);
                   },
-                  child: const Padding(
-                    padding: EdgeInsets.symmetric(vertical: 12),
-                    child: ButtonGlobal(),
-                  ),
                 ),
               ],
             ),

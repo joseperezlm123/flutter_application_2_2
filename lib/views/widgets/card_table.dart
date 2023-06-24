@@ -12,7 +12,7 @@ class CardTable extends StatelessWidget {
         TableRow(children: [
           GestureDetector(
             onTap: () => {
-              Navigator.pushNamed(context, 'LoginView'),
+              Navigator.pushNamed(context, 'ImageUpload'),
             },
             child: const _SingleCard(
               color: Colors.blue,

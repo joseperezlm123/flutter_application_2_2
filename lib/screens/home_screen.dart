@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import '../views/widgets/background.dart';
+import 'background.dart';
 import '../views/widgets/card_table.dart';
-import '../views/widgets/custom_bottom_navigation.dart';
+import 'custom_bottom_navigation.dart';
 import '../views/widgets/page_title.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -32,7 +32,7 @@ class _HomeBody extends StatelessWidget {
         // Titulos
         PageTitle(),
         // Card Table
-       const CardTable(),
+        const CardTable(),
       ]),
     );
   }

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
-import '../models/user.provider.dart';
+import '../services/user.provider.dart';
 import '../services/servides.dart';
 import '../utils/global.colors.dart';
 
@@ -18,11 +18,9 @@ class _RegisterViewState extends State<RegisterView> {
   TextEditingController materno = TextEditingController();
   final _genero = TextEditingController();
   TextEditingController nacimiento = TextEditingController();
-  TextEditingController email = TextEditingController();
-  TextEditingController movil = TextEditingController();
   TextEditingController curp = TextEditingController();
   TextEditingController rfc = TextEditingController();
-  TextEditingController domicilio = TextEditingController();
+  final TextEditingController domicilio = TextEditingController();
   //TextEditingController confirmcontrasena = TextEditingController();
   // TextEditingController contrasena = TextEditingController();
   TextEditingController estado = TextEditingController();
@@ -33,7 +31,6 @@ class _RegisterViewState extends State<RegisterView> {
   // TextEditingController fueSerPub = TextEditingController();
   // TextEditingController parSerpub = TextEditingController();
   // TextEditingController emailver = TextEditingController();
-  // TextEditingController ifefrente = TextEditingController();
 
   Gender? _selectedGender;
 
@@ -91,6 +88,7 @@ class _RegisterViewState extends State<RegisterView> {
               width: double.infinity,
               padding: const EdgeInsets.all(15.0),
               child: Form(
+                autovalidateMode: AutovalidateMode.onUserInteraction,
                 key: _keyForm,
                 child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -154,7 +152,7 @@ class _RegisterViewState extends State<RegisterView> {
                           if (valor == null || valor.isEmpty) {
                             return 'Nombre vacio';
                           }
-                          if (valor.length <= 5) {
+                          if (valor.length <= 4) {
                             return 'Apellido demasiado corto';
                           }
                           return null;
@@ -272,7 +270,7 @@ class _RegisterViewState extends State<RegisterView> {
                           if (valor == null || valor.isEmpty) {
                             return 'Campo vacio';
                           }
-                          if (valor.length <= 5) {
+                          if (valor.length <= 0) {
                             return 'Genero incorrecto';
                           }
                           return null;
@@ -403,9 +401,7 @@ class _RegisterViewState extends State<RegisterView> {
                       TextFormField(
                         maxLength: 18,
                         controller: curp,
-                        inputFormatters: [
-                          FilteringTextInputFormatter.digitsOnly
-                        ],
+                        inputFormatters: [],
                         validator: (valor) {
                           String pattern =
                               r"^([A-Z][AEIOUX][A-Z]{2}\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])[HM](?:AS|B[CS]|C[CLMSH]|D[FG]|G[TR]|HG|JC|M[CNS]|N[ETL]|OC|PL|Q[TR]|S[PLR]|T[CSL]|VZ|YN|ZS)[B-DF-HJ-NP-TV-Z]{3}[A-Z\d])(\d)$";
@@ -613,24 +609,22 @@ class _RegisterViewState extends State<RegisterView> {
                         alignment: Alignment.center,
                         child: ElevatedButton(
                             onPressed: () async {
-                              Navigator.pushNamed(context, 'PhoneVerifyPage');
                               var post = Data(
-                                  cp: cp.text,
-                                  rfc: rfc.text,
-                                  domicilio: domicilio.text,
-                                  // ingreso: ingreso.text,
-                                  curp: curp.text,
-                                  //  email: email.text,
-                                  estado: estado.text,
-                                  genero: _genero.text,
-                                  materno: materno.text,
-                                  // movil: movil.text,
-                                  nombre: _nombre.text,
-                                  paterno: paterno.text,
-                                  // alcaldia: alcaldia.text,
-                                  createdAt: null,
-                                  nacimiento: null,
-                                  updatedAt: null);
+                                cp: cp.text,
+                                rfc: rfc.text,
+                                domicilio: domicilio.text,
+                                ingreso: ingreso.text,
+                                curp: curp.text,
+                                estado: estado.text,
+                                genero: _genero.text,
+                                materno: materno.text,
+                                nombre: _nombre.text,
+                                paterno: paterno.text,
+                                alcaldia: alcaldia.text,
+                                createdAt: null,
+                                nacimiento: null,
+                                updatedAt: null,
+                              );
                               var response = await BaseClient()
                                   .post('', post.toJson())
                                   .catchError((err) {
@@ -641,6 +635,7 @@ class _RegisterViewState extends State<RegisterView> {
                               debugPrint(response.toString());
                               if (_keyForm.currentState!.validate()) {
                                 print('Validacion exitosa');
+                                Navigator.pushNamed(context, 'PhoneVerifyPage');
                               } else {
                                 print('Ha ocurrido un error');
                               }
