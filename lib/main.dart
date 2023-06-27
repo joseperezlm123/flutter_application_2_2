@@ -29,7 +29,7 @@ class App extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Flutter LoginPage',
       theme: ThemeData(primarySwatch: Colors.blue),
-      initialRoute: 'PruebaGet',
+      initialRoute: 'LoginView',
       routes: {
         '/': (context) => const SplashView(),
         'LoginView': (context) => LoginView(),

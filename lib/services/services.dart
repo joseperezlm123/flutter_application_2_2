@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_application_2_2/services/user.provider.dart';
 import 'package:http/http.dart' as http;
 
 const String baseUrl = "http://idemo.brave.com.mx/api/pospecto";
@@ -45,32 +46,29 @@ class BaseClient {
 //DELETE
   Future<dynamic> delete(String api) async {}
 //PUT
-  Future<dynamic> updateAlbum(dynamic object, String nombre) async {
-    final response = await http.put(
-      Uri.parse('http://idemo.brave.com.mx/api/pospecto'),
-      headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
-      },
-      body: jsonEncode(<String, String>{
-        'title': nombre,
-      }),
+  Future<Prospecto> buscarProspecto() async {
+    final response = await http.get(
+      Uri.parse('http://idemo.brave.com.mx/api/pospecto/60'),
     );
     if (response.statusCode == 200) {
-      return object.fromJson(jsonDecode(response.body));
+      return Prospecto.fromJson(jsonDecode(response.body));
     } else {
-      throw Exception('Failed to load album');
+      throw Exception('Failed to load Prospecto');
     }
   }
 
-  Future<dynamic> fetchAlbum(dynamic object) async {
-    final response = await http.get(
-      Uri.parse('http://idemo.brave.com.mx/api/pospecto'),
-    );
+  Future<Prospecto> alcutalizarProspecto(String nombre) async {
+    final response = await http.put(
+        Uri.parse('http://idemo.brave.com.mx/api/pospecto/60'),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8'
+        },
+        body: jsonEncode(<String, String>{'nombre': nombre}));
 
     if (response.statusCode == 200) {
-      return object.fromJson(jsonDecode(response.body));
+      return Prospecto.fromJson(jsonDecode(response.body));
     } else {
-      throw Exception('Failed to load');
+      throw Exception('Failed to update Prospecto');
     }
   }
 

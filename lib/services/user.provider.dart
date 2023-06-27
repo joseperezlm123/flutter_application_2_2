@@ -2,11 +2,11 @@
 //
 //     final prospecto = prospectoFromJson(jsonString);
 
-// import 'dart:convert';
+import 'dart:convert';
 
-// Prospecto prospectoFromJson(String str) => Prospecto.fromJson(json.decode(str));
+Prospecto prospectoFromJson(String str) => Prospecto.fromJson(json.decode(str));
 
-// String prospectoToJson(Prospecto data) => json.encode(data.toJson());
+String prospectoToJson(Prospecto data) => json.encode(data.toJson());
 
 class Prospecto {
   String nombre;

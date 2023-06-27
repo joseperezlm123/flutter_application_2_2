@@ -538,6 +538,7 @@ class _RegisterViewState extends State<RegisterView> {
                         alignment: Alignment.center,
                         child: ElevatedButton(
                             onPressed: () async {
+                              Navigator.pushNamed(context, 'EmailForm');
                               var post = Prospecto(
                                 cp: cp.text,
                                 rfc: rfc.text,
@@ -567,8 +568,6 @@ class _RegisterViewState extends State<RegisterView> {
                               } else {
                                 print('Ha ocurrido un error');
                               }
-
-                              Navigator.pushNamed(context, 'PhoneVerifyPage');
                             },
                             child: const Text(
                               'Crear cuenta',
