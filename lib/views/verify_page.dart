@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_2_2/services/user.provider.dart';
 
 import '../screens/global.colors.dart';
+import '../services/services.dart';
 
 class VerifyPage extends StatelessWidget {
   VerifyPage({super.key});
@@ -82,33 +84,34 @@ class VerifyPage extends StatelessWidget {
                       ),
                     ),
                   ),
-                  // Center(
-                  //   child: ElevatedButton(
-                  //       style: const ButtonStyle(
-                  //         backgroundColor:
-                  //             MaterialStatePropertyAll<Color>(Colors.red),
-                  //       ),
-                  //       onPressed: () async {
-                  //         //Navigator.pushNamed(context, 'EmailForm');
-                  //         var id = 53;
-                  //         var user = Data(email: email.text);
-                  //         var response = await BaseClient()
-                  //             .put('/$id', user)
-                  //             .catchError((err) {});
-                  //         if (response == null) return;
-                  //         debugPrint('Succesful :');
-                  //       },
-                  //       child: const Column(
-                  //         children: [
-                  //           Text(
-                  //             'Inicio',
-                  //             style: TextStyle(
-                  //               fontSize: 15,
-                  //             ),
-                  //           ),
-                  //         ],
-                  //       )),
-                  // ),
+                  Center(
+                    child: ElevatedButton(
+                        style: const ButtonStyle(
+                          backgroundColor:
+                              MaterialStatePropertyAll<Color>(Colors.red),
+                        ),
+                        //Navigator.pushNamed(context, 'EmailForm');
+                        onPressed: () async {
+                          var id = 60;
+                          var user =
+                              Prospecto(email: email.text, nombre: 'Hola');
+                          var response = await BaseClient()
+                              .put('/$id', user)
+                              .catchError((err) {});
+                          if (response == null) return;
+                          debugPrint('Succesful :');
+                        },
+                        child: const Column(
+                          children: [
+                            Text(
+                              'Inicio',
+                              style: TextStyle(
+                                fontSize: 15,
+                              ),
+                            ),
+                          ],
+                        )),
+                  ),
                   // AppButton(
                   //   operation: 'GET',
                   //   operationColor: Colors.green,

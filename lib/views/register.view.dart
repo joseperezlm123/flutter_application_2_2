@@ -13,6 +13,7 @@ class RegisterView extends StatefulWidget {
 }
 
 class _RegisterViewState extends State<RegisterView> {
+  Gender? _selectedGender;
   TextEditingController _nombre = TextEditingController();
   TextEditingController paterno = TextEditingController();
   TextEditingController materno = TextEditingController();
@@ -21,63 +22,14 @@ class _RegisterViewState extends State<RegisterView> {
   TextEditingController curp = TextEditingController();
   TextEditingController rfc = TextEditingController();
   final TextEditingController domicilio = TextEditingController();
-  //TextEditingController confirmcontrasena = TextEditingController();
-  // TextEditingController contrasena = TextEditingController();
   TextEditingController estado = TextEditingController();
   TextEditingController alcaldia = TextEditingController();
   TextEditingController cp = TextEditingController();
   TextEditingController ingreso = TextEditingController();
-  //TextEditingController ingresoTipo = TextEditingController();
-  // TextEditingController fueSerPub = TextEditingController();
-  // TextEditingController parSerpub = TextEditingController();
-  // TextEditingController emailver = TextEditingController();
-
-  Gender? _selectedGender;
-
-  //  late int sex, genero;
-
-  //    try {
-  //     if (_selectedGender == null) {
-  //       SnackBar snackBar = const SnackBar(
-  //         content: Text("Selecciona algun genero"),
-  //         duration: Duration(seconds: 2),
-  //       );
-  //       ScaffoldMessenger.of(context).showSnackBar(snackBar);
-  //       return;
-  //     } else if (_selectedGender == Gender.femenino) {
-  //       sex = 0;
-  //     } else {
-  //       sex = 1;
-  //     }
-  //       genero = int.parse(_nombre.text);
-  //      } catch (e) {
-  //     print(e.toString());
-  //     SnackBar snackBar = const SnackBar(
-  //       content: Text("Error!"),
-  //       duration: Duration(seconds: 2),
-  //     );
-  //     ScaffoldMessenger.of(context).showSnackBar(snackBar);
-
-  //     return;
-  //   }
 
   @override
   Widget build(BuildContext context) {
     final _keyForm = GlobalKey<FormState>();
-
-    //DateTime _dateTime = DateTime.now();
-
-    //  final Map<String, String> formValues= {
-    //    'genero': 'genero'
-    //  };
-
-    void _showDatePicker() {
-      showDatePicker(
-          context: context,
-          initialDate: DateTime.now(),
-          firstDate: DateTime(2000),
-          lastDate: DateTime(2025));
-    }
 
     return Scaffold(
         body: ListView(
@@ -136,11 +88,13 @@ class _RegisterViewState extends State<RegisterView> {
                         // },
                         keyboardType: TextInputType.text,
                         decoration: const InputDecoration(
-                          labelText: 'Nombre',
-                          border: OutlineInputBorder(),
-                          isDense: false,
-                          contentPadding: EdgeInsets.all(10),
-                        ),
+                            labelText: 'Nombre',
+                            border: OutlineInputBorder(),
+                            isDense: false,
+                            contentPadding: EdgeInsets.all(10),
+                            filled: true,
+                            enabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide.none)),
                       ),
                       const SizedBox(
                         height: 15,
@@ -159,11 +113,13 @@ class _RegisterViewState extends State<RegisterView> {
                         },
                         keyboardType: TextInputType.text,
                         decoration: const InputDecoration(
-                          labelText: 'Apellido Paterno',
-                          border: OutlineInputBorder(),
-                          isDense: false,
-                          contentPadding: EdgeInsets.all(10),
-                        ),
+                            labelText: 'Apellido Paterno',
+                            border: OutlineInputBorder(),
+                            isDense: false,
+                            contentPadding: EdgeInsets.all(10),
+                            filled: true,
+                            enabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide.none)),
                       ),
                       const SizedBox(
                         height: 15,
@@ -182,11 +138,13 @@ class _RegisterViewState extends State<RegisterView> {
                         },
                         keyboardType: TextInputType.text,
                         decoration: const InputDecoration(
-                          labelText: 'Apellido Materno',
-                          border: OutlineInputBorder(),
-                          isDense: false,
-                          contentPadding: EdgeInsets.all(10),
-                        ),
+                            labelText: 'Apellido Materno',
+                            border: OutlineInputBorder(),
+                            isDense: false,
+                            contentPadding: EdgeInsets.all(10),
+                            filled: true,
+                            enabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide.none)),
                       ),
                       const SizedBox(
                         height: 10,
@@ -207,12 +165,14 @@ class _RegisterViewState extends State<RegisterView> {
                         keyboardType: TextInputType.visiblePassword,
                         obscureText: false,
                         decoration: const InputDecoration(
-                          labelText: 'Genero',
-                          helperText: 'M/F',
-                          border: OutlineInputBorder(),
-                          isDense: false,
-                          contentPadding: EdgeInsets.all(10),
-                        ),
+                            labelText: 'Genero',
+                            helperText: 'M/F',
+                            border: OutlineInputBorder(),
+                            isDense: false,
+                            contentPadding: EdgeInsets.all(10),
+                            filled: true,
+                            enabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide.none)),
                       ),
                       const SizedBox(
                         height: 5,
@@ -271,58 +231,26 @@ class _RegisterViewState extends State<RegisterView> {
                           ],
                         ),
                       ),
-
                       const SizedBox(
-                        height: 5,
+                        height: 15,
                       ),
-                      // // Email Input
-                      TextFormField(
+                      TextField(
                         controller: nacimiento,
-                        validator: (String? valor) {
-                          if (valor == null || valor.isEmpty) {
-                            return 'Nombre vacio';
-                          }
-                          if (valor.length <= 5) {
-                            return 'Nombre demasiado corto';
-                          }
-                          return null;
-                        },
-                        keyboardType: TextInputType.datetime,
                         decoration: const InputDecoration(
-                          labelText: 'Fecha De Nacimiento',
-                          helperText: 'DD / MM / AAAA',
-                          border: OutlineInputBorder(),
-                          isDense: false,
-                          contentPadding: EdgeInsets.all(10),
-                        ),
+                            labelText: 'Fecha de Nacimiento',
+                            filled: true,
+                            prefixIcon: Icon(Icons.calendar_today),
+                            enabledBorder:
+                                OutlineInputBorder(borderSide: BorderSide.none),
+                            focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(color: Colors.blue))),
+                        readOnly: true,
+                        onTap: () {
+                          _selectDate();
+                        },
                       ),
                       const SizedBox(
-                        height: 5,
-                      ),
-                      // Email Input
-                      // TextFormField(
-                      //   controller: email,
-                      //   maxLength: 64,
-                      //   validator: (valor) {
-                      //     String pattern =
-                      //         r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
-                      //     RegExp regExp = new RegExp(pattern);
-
-                      //     return regExp.hasMatch(valor ?? '')
-                      //         ? null
-                      //         : 'El correo no es correcto';
-                      //   },
-                      //   keyboardType: TextInputType.emailAddress,
-                      //   decoration: const InputDecoration(
-                      //     labelText: 'Email',
-                      //     helperText: 'correo@correo.com',
-                      //     border: OutlineInputBorder(),
-                      //     isDense: false,
-                      //     contentPadding: EdgeInsets.all(10),
-                      //   ),
-                      // ),
-                      const SizedBox(
-                        height: 5,
+                        height: 15,
                       ),
                       // Email Input
 
@@ -342,20 +270,19 @@ class _RegisterViewState extends State<RegisterView> {
                         },
                         keyboardType: TextInputType.multiline,
                         decoration: const InputDecoration(
-                          labelText: 'Curp',
-                          border: OutlineInputBorder(),
-                          isDense: false,
-                          contentPadding: EdgeInsets.all(10),
-                        ),
+                            labelText: 'Curp',
+                            border: OutlineInputBorder(),
+                            isDense: false,
+                            contentPadding: EdgeInsets.all(10),
+                            filled: true,
+                            enabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide.none)),
                       ),
                       const SizedBox(
-                        height: 15,
+                        height: 5,
                       ),
                       // Email Input
                       TextFormField(
-                        inputFormatters: [
-                          //  FilteringTextInputFormatter.digitsOnly
-                        ],
                         maxLength: 13,
                         controller: rfc,
                         validator: (valor) {
@@ -369,14 +296,16 @@ class _RegisterViewState extends State<RegisterView> {
                         },
                         keyboardType: TextInputType.text,
                         decoration: const InputDecoration(
-                          labelText: 'RFC',
-                          border: OutlineInputBorder(),
-                          isDense: false,
-                          contentPadding: EdgeInsets.all(10),
-                        ),
+                            labelText: 'RFC',
+                            border: OutlineInputBorder(),
+                            isDense: false,
+                            contentPadding: EdgeInsets.all(10),
+                            filled: true,
+                            enabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide.none)),
                       ),
                       const SizedBox(
-                        height: 15,
+                        height: 5,
                       ),
                       // Email Input
                       TextFormField(
@@ -392,11 +321,13 @@ class _RegisterViewState extends State<RegisterView> {
                         },
                         keyboardType: TextInputType.text,
                         decoration: const InputDecoration(
-                          labelText: 'Domicilio',
-                          border: OutlineInputBorder(),
-                          isDense: false,
-                          contentPadding: EdgeInsets.all(10),
-                        ),
+                            labelText: 'Domicilio',
+                            border: OutlineInputBorder(),
+                            isDense: false,
+                            contentPadding: EdgeInsets.all(10),
+                            filled: true,
+                            enabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide.none)),
                       ),
                       const SizedBox(
                         height: 15,
@@ -415,11 +346,13 @@ class _RegisterViewState extends State<RegisterView> {
                         },
                         keyboardType: TextInputType.text,
                         decoration: const InputDecoration(
-                          labelText: 'Estado',
-                          border: OutlineInputBorder(),
-                          isDense: false,
-                          contentPadding: EdgeInsets.all(10),
-                        ),
+                            labelText: 'Estado',
+                            border: OutlineInputBorder(),
+                            isDense: false,
+                            contentPadding: EdgeInsets.all(10),
+                            filled: true,
+                            enabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide.none)),
                       ),
                       const SizedBox(
                         height: 15,
@@ -438,11 +371,13 @@ class _RegisterViewState extends State<RegisterView> {
                         },
                         keyboardType: TextInputType.text,
                         decoration: const InputDecoration(
-                          labelText: 'Alcaldia',
-                          border: OutlineInputBorder(),
-                          isDense: false,
-                          contentPadding: EdgeInsets.all(10),
-                        ),
+                            labelText: 'Alcaldia',
+                            border: OutlineInputBorder(),
+                            isDense: false,
+                            contentPadding: EdgeInsets.all(10),
+                            filled: true,
+                            enabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide.none)),
                       ),
                       const SizedBox(
                         height: 15,
@@ -461,11 +396,13 @@ class _RegisterViewState extends State<RegisterView> {
                         },
                         keyboardType: TextInputType.text,
                         decoration: const InputDecoration(
-                          labelText: 'CP',
-                          border: OutlineInputBorder(),
-                          isDense: false,
-                          contentPadding: EdgeInsets.all(10),
-                        ),
+                            labelText: 'CP',
+                            border: OutlineInputBorder(),
+                            isDense: false,
+                            contentPadding: EdgeInsets.all(10),
+                            filled: true,
+                            enabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide.none)),
                       ),
                       const SizedBox(
                         height: 15,
@@ -484,11 +421,13 @@ class _RegisterViewState extends State<RegisterView> {
                         },
                         keyboardType: TextInputType.datetime,
                         decoration: const InputDecoration(
-                          labelText: 'Ingreso',
-                          border: OutlineInputBorder(),
-                          isDense: false,
-                          contentPadding: EdgeInsets.all(10),
-                        ),
+                            labelText: 'Ingreso',
+                            border: OutlineInputBorder(),
+                            isDense: false,
+                            contentPadding: EdgeInsets.all(10),
+                            filled: true,
+                            enabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide.none)),
                       ),
                       const SizedBox(
                         height: 15,
@@ -538,7 +477,7 @@ class _RegisterViewState extends State<RegisterView> {
                         alignment: Alignment.center,
                         child: ElevatedButton(
                             onPressed: () async {
-                              Navigator.pushNamed(context, 'EmailForm');
+                              Navigator.pushNamed(context, 'VerifyPage');
                               var post = Prospecto(
                                 cp: cp.text,
                                 rfc: rfc.text,
@@ -583,5 +522,18 @@ class _RegisterViewState extends State<RegisterView> {
         ),
       ],
     ));
+  }
+
+  Future<void> _selectDate() async {
+    DateTime? _picked = await showDatePicker(
+        context: context,
+        initialDate: DateTime.now(),
+        firstDate: DateTime(2000),
+        lastDate: DateTime(2100));
+    if (_picked != null) {
+      setState(() {
+        nacimiento.text = _picked.toString().split('   ')[0];
+      });
+    }
   }
 }

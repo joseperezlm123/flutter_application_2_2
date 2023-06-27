@@ -11,7 +11,7 @@ import 'views/phone_verify.dart';
 import 'views/register.view.dart';
 import 'views/splash.view.dart';
 import 'views/verificate_acount_image.dart';
-import 'views/verification_code.dart';
+import 'views/verification_phone.dart';
 import 'views/verify_code_email.dart';
 import 'views/verify_page.dart';
 import 'views/widgets/aviso_privacidad.dart';

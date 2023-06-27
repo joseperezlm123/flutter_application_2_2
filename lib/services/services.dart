@@ -31,7 +31,27 @@ class BaseClient {
         url,
         body: _payload,
         headers: {"Content-Type": "application/json"},
-        // ignore: body_might_complete_normally_catch_error
+      );
+      //  if (response.statusCode == 200) {
+      return response.body;
+      //  } else {
+      //    return "marco error";
+      //  }
+    } catch (e) {
+      debugPrint(e.toString());
+    }
+  }
+
+  // PUT
+  Future<dynamic> put(String api, dynamic object) async {
+    var url = Uri.parse(baseUrl + api);
+    var _payload = json.encode(object);
+    debugPrint(object.toString());
+    try {
+      var response = await client.put(
+        url,
+        body: _payload,
+        headers: {"Content-Type": "application/json"},
       );
       //  if (response.statusCode == 200) {
       return response.body;
@@ -45,7 +65,7 @@ class BaseClient {
 
 //DELETE
   Future<dynamic> delete(String api) async {}
-//PUT
+//PUT FUNCION
   Future<Prospecto> buscarProspecto() async {
     final response = await http.get(
       Uri.parse('http://idemo.brave.com.mx/api/pospecto/60'),
