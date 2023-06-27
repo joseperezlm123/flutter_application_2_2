@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_2_2/provider/login_from_provider.dart';
+import 'package:flutter_application_2_2/login.helper.dart/login_from_provider.dart';
 import 'package:provider/provider.dart';
 
-import '../utils/global.colors.dart';
+import '../screens/global.colors.dart';
 
 class LoginView extends StatelessWidget {
   LoginView({super.key});

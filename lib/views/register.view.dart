@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../services/user.provider.dart';
-import '../services/servides.dart';
-import '../utils/global.colors.dart';
+import '../services/services.dart';
+import '../screens/global.colors.dart';
 
 enum Gender { masculino, femenino }
 
@@ -191,78 +191,7 @@ class _RegisterViewState extends State<RegisterView> {
                       const SizedBox(
                         height: 10,
                       ),
-                      // Padding(
-                      //   padding: const EdgeInsets.symmetric(),
-                      //   child: DropdownButtonFormField(
-                      //     value: _selectedVal,
-                      //     items: _productDizesList
-                      //         .map(
-                      //           (e) => DropdownMenuItem(
-                      //             child: Text(e),
-                      //             value: e,
-                      //           ),
-                      //         )
-                      //         .toList(),
-                      //     onChanged: (val) {
-                      //       setState(() {
-                      //         _selectedVal = val as String;
-                      //       });
-                      //     },
-                      //     icon: const Icon(
-                      //       Icons.arrow_drop_down_circle,
-                      //       color: Colors.purple,
-                      //     ),
-                      //     dropdownColor: Colors.deepPurple.shade50,
-                      //     decoration: const InputDecoration(
-                      //       labelText: 'Masculino',
-                      //       prefixIcon: Icon(
-                      //         Icons.accessibility_new_rounded,
-                      //         color: Colors.purple,
-                      //       ),
-                      //       border: OutlineInputBorder(),
-                      //     ),
-                      //   ),
-                      // ),
-                      // const SizedBox(
-                      //   height: 10,
-                      // ),
-                      // DropdownButtonFormField<String>(
-                      //     items: const [
-                      //         DropdownMenuItem(value: 'genero', child: Text('genero')),
-                      //         DropdownMenuItem(value: 'genero', child: Text('genero')),
-                      //   ], onChanged: (value) {
-                      //     print(value);
-                      //     formValues['genero'] = value ?? 'genero';
-                      //    }),
 
-                      // const SizedBox(
-                      //   height: 15,
-                      // ),
-                      // Email Input
-                      // TextFormField(
-                      //   controller: contrasena,
-                      //   validator: (valor) {
-                      //     if (valor!.isEmpty) {
-                      //       return 'Contraseña vacio';
-                      //     }
-                      //     if (valor.length < 5 || valor.length > 15) {
-                      //       return 'Campo vacio';
-                      //     }
-                      //     return null;
-                      //   },
-                      //   keyboardType: TextInputType.visiblePassword,
-                      //   obscureText: true,
-                      //   decoration: const InputDecoration(
-                      //     labelText: 'Contraseña',
-                      //     border: OutlineInputBorder(),
-                      //     isDense: false,
-                      //     contentPadding: EdgeInsets.all(10),
-                      //   ),
-                      // ),
-                      // const SizedBox(
-                      //   height: 15,
-                      // ),
-                      // Email Input
                       TextFormField(
                         controller: _genero,
                         maxLength: 1,
@@ -609,7 +538,7 @@ class _RegisterViewState extends State<RegisterView> {
                         alignment: Alignment.center,
                         child: ElevatedButton(
                             onPressed: () async {
-                              var post = Data(
+                              var post = Prospecto(
                                 cp: cp.text,
                                 rfc: rfc.text,
                                 domicilio: domicilio.text,
@@ -635,10 +564,11 @@ class _RegisterViewState extends State<RegisterView> {
                               debugPrint(response.toString());
                               if (_keyForm.currentState!.validate()) {
                                 print('Validacion exitosa');
-                                Navigator.pushNamed(context, 'PhoneVerifyPage');
                               } else {
                                 print('Ha ocurrido un error');
                               }
+
+                              Navigator.pushNamed(context, 'PhoneVerifyPage');
                             },
                             child: const Text(
                               'Crear cuenta',

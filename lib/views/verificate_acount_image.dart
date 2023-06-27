@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../services/user.provider.dart';
-import '../services/servides.dart';
+import '../services/services.dart';
 
 class VerificateAcount extends StatefulWidget {
   const VerificateAcount({super.key});
@@ -113,9 +113,9 @@ class _VerificateAcountState extends State<VerificateAcount> {
     var pickedFile;
 
     if (op == 1) {
-      pickedFile = await picker.getImage(source: ImageSource.camera);
+      pickedFile = await picker.pickImage(source: ImageSource.camera);
     } else {
-      pickedFile = await picker.getImage(source: ImageSource.gallery);
+      pickedFile = await picker.pickImage(source: ImageSource.gallery);
     }
 
     setState(() {
@@ -209,15 +209,17 @@ class _VerificateAcountState extends State<VerificateAcount> {
                     onPressed: () async {
                       subir_imagen();
                       var id = 27;
-                      var put = Data(
+                      var put = Prospecto(
                           ifefrente: ifefrente.toString(),
                           nombre: 'JoseLuis',
                           movil: '',
                           updatedAt: null);
 
                       var response = await BaseClient()
-                          .put('/$id', put)
-                          .catchError((err) {});
+                          .post('$id', put.toJson())
+                          .catchError((err) {
+                        debugPrint(err.toString());
+                      });
                       if (response == null) return;
                       debugPrint('successful: ');
                     },

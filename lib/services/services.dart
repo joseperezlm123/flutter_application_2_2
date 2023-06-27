@@ -42,31 +42,26 @@ class BaseClient {
     }
   }
 
-  //PUT
-  // Future<dynamic> put(String api, dynamic object) async {
-  //   var url = Uri.parse(baseUrl + api);
-  //   var _payload = json.encode(object);
-  //   debugPrint(object.toString());
-  //   try {
-  //     var response = await client.put(
-  //       url,
-  //       body: _payload,
-  //       headers: {"Content-Type": "application/json"},
-  //       // ignore: body_might_complete_normally_catch_error
-  //     );
-  //     //  if (response.statusCode == 200) {
-  //     return response.body;
-  //     //  } else {
-  //     //    return "marco error";
-  //     //  }
-  //   } catch (e) {
-  //     debugPrint(e.toString());
-  //   }
-  // }
-
 //DELETE
   Future<dynamic> delete(String api) async {}
 //PUT
+  Future<dynamic> updateAlbum(dynamic object, String nombre) async {
+    final response = await http.put(
+      Uri.parse('http://idemo.brave.com.mx/api/pospecto'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(<String, String>{
+        'title': nombre,
+      }),
+    );
+    if (response.statusCode == 200) {
+      return object.fromJson(jsonDecode(response.body));
+    } else {
+      throw Exception('Failed to load album');
+    }
+  }
+
   Future<dynamic> fetchAlbum(dynamic object) async {
     final response = await http.get(
       Uri.parse('http://idemo.brave.com.mx/api/pospecto'),
@@ -78,4 +73,6 @@ class BaseClient {
       throw Exception('Failed to load');
     }
   }
+
+  //PutRequest
 }

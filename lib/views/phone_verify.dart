@@ -1,8 +1,8 @@
-import 'dart:convert';
-
-import 'package:http/http.dart' as http;
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import '../utils/global.colors.dart';
+import 'package:flutter_application_2_2/services/user.provider.dart';
+
+import '../screens/global.colors.dart';
 
 class PhoneVerifyPage extends StatefulWidget {
   PhoneVerifyPage({super.key});
@@ -12,30 +12,28 @@ class PhoneVerifyPage extends StatefulWidget {
 }
 
 class _PhoneVerifyPageState extends State<PhoneVerifyPage> {
-  final _keyForm = GlobalKey<FormState>();
+  Prospecto? informacion;
 
-  TextEditingController movil = TextEditingController();
-  TextEditingController nombre = TextEditingController();
-  TextEditingController _controller = TextEditingController();
-  Future<dynamic> updateAlbum(dynamic object, String nombre) async {
-    final response = await http.put(
-      Uri.parse('http://idemo.brave.com.mx/api/pospecto'),
-      headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
-      },
-      body: jsonEncode(<String, String>{
-        'title': nombre,
-      }),
-    );
-    if (response.statusCode == 200) {
-      return object.fromJson(jsonDecode(response.body));
-    } else {
-      throw Exception('Failed to load album');
-    }
+  @override
+  void initState() {
+    super.initState();
+    getPrueba();
+  }
+
+  Future<void> getPrueba() async {
+    final response =
+        await Dio().get('http://idemo.brave.com.mx/api/pospecto/5');
+    informacion = Prospecto.fromJson(response.data);
+
+    setState(() {});
   }
 
   @override
   Widget build(BuildContext context) {
+    final _keyForm = GlobalKey<FormState>();
+
+    TextEditingController movil = TextEditingController();
+
     return Scaffold(
       body: SingleChildScrollView(
         child: SafeArea(
@@ -48,6 +46,7 @@ class _PhoneVerifyPageState extends State<PhoneVerifyPage> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  Text(informacion?.movil ?? 'No data'),
                   const SizedBox(
                     height: 20,
                   ),
@@ -104,26 +103,25 @@ class _PhoneVerifyPageState extends State<PhoneVerifyPage> {
                     ),
                   ),
                   Center(
-                    child: ElevatedButton(
-                        style: const ButtonStyle(
-                          backgroundColor:
-                              MaterialStatePropertyAll<Color>(Colors.blue),
-                        ),
-                        onPressed: () async {
-                          setState(() {
-                            _futureAlbum = updateAlbum(_controller.text);
-                          });
-                        },
-                        child: const Column(
-                          children: [
-                            Text(
-                              'Inicio',
-                              style: TextStyle(
-                                fontSize: 15,
+                    child: Container(
+                      alignment: Alignment.center,
+                      child: ElevatedButton(
+                          style: const ButtonStyle(
+                            backgroundColor:
+                                MaterialStatePropertyAll<Color>(Colors.blue),
+                          ),
+                          onPressed: () {},
+                          child: const Column(
+                            children: [
+                              Text(
+                                'Inicio',
+                                style: TextStyle(
+                                  fontSize: 15,
+                                ),
                               ),
-                            ),
-                          ],
-                        )),
+                            ],
+                          )),
+                    ),
                   ),
                 ],
               ),
@@ -134,5 +132,3 @@ class _PhoneVerifyPageState extends State<PhoneVerifyPage> {
     );
   }
 }
-
-late Future<dynamic> _futureAlbum;

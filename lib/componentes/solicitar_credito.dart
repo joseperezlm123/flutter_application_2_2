@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_application_2_2/services/select_image.dart';
+import 'package:flutter_application_2_2/utils/select_image.dart';
 
 class SolicitarCredito extends StatefulWidget {
   const SolicitarCredito({super.key});

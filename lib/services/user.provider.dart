@@ -1,41 +1,21 @@
-import 'dart:convert';
+// To parse this JSON data, do
+//
+//     final prospecto = prospectoFromJson(jsonString);
 
-Post postFromJson(String str) => Post.fromJson(json.decode(str));
+// import 'dart:convert';
 
-String postToJson(Post data) => json.encode(data.toJson());
+// Prospecto prospectoFromJson(String str) => Prospecto.fromJson(json.decode(str));
 
-class Post {
-  bool success;
-  Data data;
-  String message;
+// String prospectoToJson(Prospecto data) => json.encode(data.toJson());
 
-  Post({
-    required this.success,
-    required this.data,
-    required this.message,
-  });
-
-  factory Post.fromJson(Map<String, dynamic> json) => Post(
-        success: json["success"],
-        data: Data.fromJson(json["data"]),
-        message: json["message"],
-      );
-
-  Map<String, dynamic> toJson() => {
-        "success": success,
-        "data": data.toJson(),
-        "message": message,
-      };
-}
-
-class Data {
-  String? nombre;
+class Prospecto {
+  String nombre;
   dynamic paterno;
   dynamic materno;
   dynamic genero;
   dynamic nacimiento;
   dynamic email;
-  String? movil;
+  dynamic movil;
   dynamic curp;
   dynamic rfc;
   dynamic domicilio;
@@ -51,11 +31,11 @@ class Data {
   dynamic parServpub;
   dynamic emailver;
   dynamic movilver;
-  dynamic createdAt;
+  DateTime? createdAt;
   DateTime? updatedAt;
 
-  Data({
-    this.nombre,
+  Prospecto({
+    required this.nombre,
     this.paterno,
     this.materno,
     this.genero,
@@ -81,7 +61,7 @@ class Data {
     this.updatedAt,
   });
 
-  factory Data.fromJson(Map<String, dynamic> json) => Data(
+  factory Prospecto.fromJson(Map<String, dynamic> json) => Prospecto(
         nombre: json["nombre"],
         paterno: json["paterno"],
         materno: json["materno"],
@@ -104,7 +84,7 @@ class Data {
         parServpub: json["par_servpub"],
         emailver: json["emailver"],
         movilver: json["movilver"],
-        createdAt: json["created_at"],
+        createdAt: DateTime.parse(json["created_at"]),
         updatedAt: DateTime.parse(json["updated_at"]),
       );
 
@@ -131,7 +111,7 @@ class Data {
         "par_servpub": parServpub,
         "emailver": emailver,
         "movilver": movilver,
-        "created_at": createdAt,
+        "created_at": createdAt?.toIso8601String(),
         "updated_at": updatedAt?.toIso8601String(),
       };
 }

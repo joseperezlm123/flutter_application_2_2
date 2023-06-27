@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../services/user.provider.dart';
-import '../services/servides.dart';
+import '../services/services.dart';
 
 class VerificateAcount2 extends StatefulWidget {
   const VerificateAcount2({super.key});
@@ -247,7 +247,7 @@ class _VerificateAcountState extends State<VerificateAcount2> {
                       subir_imagen();
                       Navigator.pushNamed(context, 'VerificateAcount2');
                       var id = 27;
-                      var put = Data(
+                      var put = Prospecto(
                           movil: null,
                           ifefrente: ifefrente.text,
                           cp: null,
@@ -256,7 +256,7 @@ class _VerificateAcountState extends State<VerificateAcount2> {
                           updatedAt: null);
 
                       var response = await BaseClient()
-                          .put('/$id', put.toJson())
+                          .post('$id', put.toJson())
                           .catchError((err) {
                         debugPrint(err.toString());
                       });

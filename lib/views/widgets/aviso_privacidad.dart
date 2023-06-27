@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../utils/global.colors.dart';
+import '../../screens/global.colors.dart';
 
 class AvisoPrivacidad extends StatelessWidget {
   const AvisoPrivacidad({super.key});
@@ -31,8 +31,8 @@ class AvisoPrivacidad extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(
-                        height: 15,
-                      ),
+                  height: 15,
+                ),
                 Column(
                   children: [
                     const Center(
@@ -127,7 +127,8 @@ class AvisoPrivacidad extends StatelessWidget {
                                 ),
                                 textAlign: TextAlign.center,
                               ),
-                            ),Padding(
+                            ),
+                            Padding(
                               padding: EdgeInsets.symmetric(vertical: 15),
                               child: Text(
                                 'Confirmo que tengo conocimiento del contenido del Aviso de Privacidad',
@@ -138,7 +139,8 @@ class AvisoPrivacidad extends StatelessWidget {
                                 ),
                                 textAlign: TextAlign.center,
                               ),
-                            ),Padding(
+                            ),
+                            Padding(
                               padding: EdgeInsets.symmetric(vertical: 15),
                               child: Text(
                                 'Confirmo que tengo conocimiento del contenido del Aviso de Privacidad',

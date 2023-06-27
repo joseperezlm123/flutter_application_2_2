@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../utils/global.colors.dart';
+import '../screens/global.colors.dart';
 
 class ForgotView extends StatelessWidget {
   ForgotView({super.key});

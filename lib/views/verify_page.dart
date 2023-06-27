@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../utils/global.colors.dart';
+import '../screens/global.colors.dart';
 
 class VerifyPage extends StatelessWidget {
   VerifyPage({super.key});

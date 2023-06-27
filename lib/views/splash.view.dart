@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_2_2/views/login.view.dart';
 import 'package:get/get.dart';
 
-import '../utils/global.colors.dart';
+import '../screens/global.colors.dart';
 
 class SplashView extends StatelessWidget {
   const SplashView({super.key});
