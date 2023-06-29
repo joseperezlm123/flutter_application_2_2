@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_2_2/views/prueba.get.dart';
+import 'package:flutter_application_2_2/views/prueba.put.dart';
 import 'package:flutter_application_2_2/views/verificate_acount_imagen2.dart';
 import 'package:get/get.dart';
 import 'componentes/agregar_nueva_tarjeta.dart';
@@ -29,7 +30,7 @@ class App extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Flutter LoginPage',
       theme: ThemeData(primarySwatch: Colors.blue),
-      initialRoute: 'LoginView',
+      initialRoute: 'PhoneVerifyPage',
       routes: {
         '/': (context) => const SplashView(),
         'LoginView': (context) => LoginView(),
@@ -46,6 +47,7 @@ class App extends StatelessWidget {
         'VerificateAcount': (context) => const VerificateAcount(),
         'VerificateAcount2': (context) => const VerificateAcount2(),
         'PruebaGet': (context) => const PruebaGet(),
+        'PruebaPut': (context) => const PruebaPut(),
       },
     );
   }

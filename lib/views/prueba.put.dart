@@ -4,15 +4,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_2_2/services/user.provider.dart';
 import 'package:http/http.dart' as http;
 
-class PhoneVerifyPage extends StatefulWidget {
-  const PhoneVerifyPage({super.key});
+class PruebaPut extends StatefulWidget {
+  const PruebaPut({super.key});
 
   @override
-  State<PhoneVerifyPage> createState() => _PhoneVerifyPageState();
+  State<PruebaPut> createState() => _PruebaPutState();
 }
 
-class _PhoneVerifyPageState extends State<PhoneVerifyPage> {
-  final TextEditingController movil = TextEditingController();
+class _PruebaPutState extends State<PruebaPut> {
+  final TextEditingController nombre = TextEditingController();
+  final TextEditingController email = TextEditingController();
   late Future<Prospecto> _futureProspecto;
 
   Future<Prospecto> buscarProspecto() async {
@@ -26,13 +27,13 @@ class _PhoneVerifyPageState extends State<PhoneVerifyPage> {
     }
   }
 
-  Future<Prospecto> alcutalizarProspecto(String movil) async {
+  Future<Prospecto> alcutalizarProspecto(String email) async {
     final response = await http.put(
         Uri.parse('http://idemo.brave.com.mx/api/pospecto/75'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8'
         },
-        body: jsonEncode(<String, String>{'movil': movil}));
+        body: jsonEncode(<String, String>{'email': email}));
 
     if (response.statusCode == 200) {
       return Prospecto.fromJson(jsonDecode(response.body));
@@ -67,22 +68,27 @@ class _PhoneVerifyPageState extends State<PhoneVerifyPage> {
                   return Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text(snapshot.data!.movil),
+                      Text(snapshot.data!.email),
+                      TextField(
+                        controller: nombre,
+                        decoration: const InputDecoration(
+                            hintText: 'Introduce tu nombre'),
+                      ),
                       TextFormField(
+                        controller: email,
                         validator: (valor) {
                           String pattern =
-                              r'^\s*(?:\+?(\d{1,3}))?[-. (]*(\d{3})[-. )]*(\d{3})[-. ]*(\d{4})(?: *x(\d+))?\s*$';
+                              r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
                           RegExp regExp = new RegExp(pattern);
 
                           return regExp.hasMatch(valor ?? '')
                               ? null
-                              : 'El Telefono no es valido';
+                              : 'El correo no es correcto';
                         },
-                        controller: movil,
-                        keyboardType: TextInputType.number,
+                        keyboardType: TextInputType.emailAddress,
                         decoration: const InputDecoration(
-                          labelText: 'Telefono',
-                          helperText: '+52 xxxx xxxx xx ',
+                          labelText: 'Email',
+                          helperText: 'correo@correo.com',
                           border: OutlineInputBorder(),
                           isDense: false,
                           contentPadding: EdgeInsets.all(10),
@@ -90,9 +96,10 @@ class _PhoneVerifyPageState extends State<PhoneVerifyPage> {
                       ),
                       ElevatedButton(
                           onPressed: () {
+                            Navigator.pushNamed(context, 'PhoneVerifyPage');
                             setState(() {
                               _futureProspecto =
-                                  alcutalizarProspecto(movil.text);
+                                  alcutalizarProspecto(email.text);
                             });
                           },
                           child: const Text('Descargar data'))

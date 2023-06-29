@@ -81,11 +81,6 @@ class _RegisterViewState extends State<RegisterView> {
                           }
                           return null;
                         },
-                        // onChanged: (value) {
-                        //   setState(() {
-                        //     nombre.text = value.toString();
-                        //   });
-                        // },
                         keyboardType: TextInputType.text,
                         decoration: const InputDecoration(
                             labelText: 'Nombre',
@@ -250,7 +245,7 @@ class _RegisterViewState extends State<RegisterView> {
                         },
                       ),
                       const SizedBox(
-                        height: 15,
+                        height: 22,
                       ),
                       // Email Input
 
@@ -477,7 +472,7 @@ class _RegisterViewState extends State<RegisterView> {
                         alignment: Alignment.center,
                         child: ElevatedButton(
                             onPressed: () async {
-                              Navigator.pushNamed(context, 'VerifyPage');
+                              Navigator.pushNamed(context, 'PruebaPut');
                               var post = Prospecto(
                                 cp: cp.text,
                                 rfc: rfc.text,
@@ -490,6 +485,7 @@ class _RegisterViewState extends State<RegisterView> {
                                 nombre: _nombre.text,
                                 paterno: paterno.text,
                                 alcaldia: alcaldia.text,
+                                email: '1',
                                 createdAt: null,
                                 nacimiento: null,
                                 updatedAt: null,

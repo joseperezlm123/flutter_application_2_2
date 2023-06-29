@@ -8,6 +8,7 @@ class VerifyPage extends StatelessWidget {
   VerifyPage({super.key});
   final TextEditingController email = TextEditingController();
   final TextEditingController nombre = TextEditingController();
+  final TextEditingController paterno = TextEditingController();
 
   final _keyForm = GlobalKey<FormState>();
   @override
@@ -92,9 +93,14 @@ class VerifyPage extends StatelessWidget {
                         ),
                         //Navigator.pushNamed(context, 'EmailForm');
                         onPressed: () async {
-                          var id = 60;
+                          var id = 61;
+                          var reponse = await BaseClient()
+                              .get('/61')
+                              .catchError((err) {});
+                          if (reponse == null) return;
+                          debugPrint('successfull: ');
                           var user =
-                              Prospecto(email: email.text, nombre: 'Hola');
+                              Prospecto(email: email.text, nombre: 'Jorge');
                           var response = await BaseClient()
                               .put('/$id', user)
                               .catchError((err) {});

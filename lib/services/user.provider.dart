@@ -34,6 +34,8 @@ class Prospecto {
   DateTime? createdAt;
   DateTime? updatedAt;
 
+  var length;
+
   Prospecto({
     required this.nombre,
     this.paterno,
@@ -62,13 +64,13 @@ class Prospecto {
   });
 
   factory Prospecto.fromJson(Map<String, dynamic> json) => Prospecto(
-        nombre: json["nombre"],
+        nombre: 'nombre',
         paterno: json["paterno"],
         materno: json["materno"],
         genero: json["genero"],
         nacimiento: json["nacimiento"],
-        email: json["email"],
-        movil: json["movil"],
+        email: 'email',
+        movil: 'movil',
         curp: json["curp"],
         rfc: json["rfc"],
         domicilio: json["domicilio"],
@@ -84,8 +86,8 @@ class Prospecto {
         parServpub: json["par_servpub"],
         emailver: json["emailver"],
         movilver: json["movilver"],
-        createdAt: DateTime.parse(json["created_at"]),
-        updatedAt: DateTime.parse(json["updated_at"]),
+        createdAt: json["created_at"],
+        updatedAt: json["updated_at"],
       );
 
   Map<String, dynamic> toJson() => {

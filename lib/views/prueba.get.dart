@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-
 import '../services/user.provider.dart';
 
 class PruebaGet extends StatefulWidget {
@@ -13,90 +12,108 @@ class PruebaGet extends StatefulWidget {
 
 class _PruebaGetState extends State<PruebaGet> {
   final TextEditingController nombre = TextEditingController();
-  late Future<Prospecto> _futureProspecto;
-  @override
-  void initState() {
-    super.initState();
-    _futureProspecto = buscarProspecto();
-  }
-
-// PUT FUNCION
-  Future<Prospecto> buscarProspecto() async {
-    final response = await http.get(
-      Uri.parse('http://idemo.brave.com.mx/api/pospecto/60'),
-    );
-    if (response.statusCode == 200) {
-      return Prospecto.fromJson(jsonDecode(response.body));
-    } else {
-      throw Exception('Failed to load Prospecto');
-    }
-  }
-
-  Future<Prospecto> alcutalizarProspecto(String nombre) async {
-    final response = await http.put(
-        Uri.parse('http://idemo.brave.com.mx/api/pospecto/60'),
-        headers: <String, String>{
-          'Content-Type': 'application/json; charset=UTF-8'
-        },
-        body: jsonEncode(<String, String>{'nombre': nombre}));
-
-    if (response.statusCode == 200) {
-      return Prospecto.fromJson(jsonDecode(response.body));
-    } else {
-      throw Exception('Failed to update Prospecto');
-    }
-  }
-// END PUT
+  final TextEditingController email = TextEditingController();
+  late Future<Prospecto> prospecto;
+  final url = Uri.parse('http://idemo.brave.com.mx/api/pospecto');
+  final headers = {"Content-Type": "application/json;charset=UTF-8"};
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Peticion Http'),
+        title: const Text('Usuarios Api'),
       ),
-      body: Center(
-        child: Column(
-          children: [
-            Container(
-              alignment: Alignment.center,
-              padding: const EdgeInsets.all(8),
-              child: FutureBuilder<Prospecto>(
-                future: _futureProspecto,
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.done) {
-                    if (snapshot.hasData) {
-                      return Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          Text(snapshot.data!.nombre),
-                          TextField(
-                            controller: nombre,
-                            decoration: const InputDecoration(
-                              hintText: 'Enter Name',
-                            ),
-                          ),
-                          ElevatedButton(
-                            onPressed: () {
-                              setState(() {
-                                _futureProspecto =
-                                    alcutalizarProspecto(nombre.text);
-                              });
-                            },
-                            child: const Text('Update Data'),
-                          )
-                        ],
-                      );
-                    } else if (snapshot.hasError) {
-                      return Text('${snapshot.error}');
-                    }
-                  }
-                  return const CircularProgressIndicator();
-                },
-              ),
-            )
-          ],
-        ),
+      body: FutureBuilder<Prospecto>(
+          future: prospecto,
+          builder: (context, snap) {
+            if (snap.hasData) {
+              return Column(
+                children: [
+                  ListTile(
+                    title: Text(snap.data!.nombre),
+                    subtitle: Text(snap.data!.email),
+                  ),
+                  const Divider()
+                ],
+              );
+            }
+            if (snap.hasError) {
+              return Center(
+                child: Text('Ha habido un error: ${snap.error}'),
+              );
+            }
+            return const CircularProgressIndicator();
+          }),
+      floatingActionButton: FloatingActionButton(
+        onPressed: showForm,
+        child: const Icon(Icons.add),
       ),
     );
+  }
+
+  void showForm() {
+    showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: const Text('Agregar Usuario'),
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                TextField(
+                  controller: nombre,
+                  decoration:
+                      const InputDecoration(hintText: 'Apellido Paterno'),
+                ),
+                const SizedBox(height: 15),
+                TextField(
+                  controller: email,
+                  decoration: const InputDecoration(hintText: 'email'),
+                ),
+              ],
+            ),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: const Text('Cancelar'),
+              ),
+              TextButton(
+                  onPressed: () {
+                    saveProspecto();
+                    Navigator.of(context).pop();
+                  },
+                  child: const Text('Enviar'))
+            ],
+          );
+        });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    prospecto = getProspecto();
+  }
+
+  Future<Prospecto> getProspecto() async {
+    final res = await http.get(url);
+
+    if (res.statusCode == 200) {
+      final json = jsonDecode(res.body);
+      final Prospecto pros = Prospecto.fromJson(json);
+      return pros;
+    }
+    return Future.error('No se pudo cargar la informacion de usuario');
+  }
+
+  void saveProspecto() async {
+    final pros = {"nombre": nombre.text, "email": email.text};
+    await http.post(url, headers: headers, body: jsonEncode(pros));
+    nombre.clear();
+    email.clear();
+    setState(() {
+      prospecto = getProspecto();
+    });
   }
 }
