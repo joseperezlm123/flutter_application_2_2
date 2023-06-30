@@ -1,22 +1,20 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:http/http.dart' as http;
 
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:http/http.dart' as http;
 import '../services/user.provider.dart';
 
-class VerificateAcount extends StatefulWidget {
-  const VerificateAcount({super.key});
+class PruebaImagePut extends StatefulWidget {
+  const PruebaImagePut({super.key});
 
-  // TextEditingController ifefrente = TextEditingController();
   @override
-  State<VerificateAcount> createState() => _VerificateAcountState();
+  State<PruebaImagePut> createState() => _PruebaImagePutState();
 }
 
-class _VerificateAcountState extends State<VerificateAcount> {
-  // TextEditingController ifefrente = TextEditingController();
+class _PruebaImagePutState extends State<PruebaImagePut> {
   opciones(context) {
     showDialog(
         context: context,
@@ -133,27 +131,17 @@ class _VerificateAcountState extends State<VerificateAcount> {
 
   Dio dio = new Dio();
 
-  Future<dynamic> buscarProspecto() async {
-    final response = await http.get(
-      Uri.parse('http://idemo.brave.com.mx/api/pospecto/75'),
-    );
-    if (response.statusCode == 200) {
-      return Prospecto.fromJson(jsonDecode(response.body));
-    } else {
-      throw Exception('Failed to load Prospecto');
-    }
-  }
-
   Future<void> subir_imagen() async {
     try {
       String filename = imagen!.path.split('/').last;
 
       FormData formData = new FormData.fromMap({
-        'file': await MultipartFile.fromFile(imagen!.path, filename: filename)
+        'ifefrente':
+            await MultipartFile.fromFile(imagen!.path, filename: filename)
       });
-
+      debugPrint("formData:  " + formData.toString());
       await dio
-          .put('http://idemo.brave.com.mx/api/pospecto/27', data: formData)
+          .put('http://idemo.brave.com.mx/api/pospecto/75', data: formData)
           .then((value) {
         if (value.toString() == '1') {
           print('La foto se subio correctamente');
@@ -166,6 +154,24 @@ class _VerificateAcountState extends State<VerificateAcount> {
     }
   }
 
+  Future<Prospecto> buscarProspecto() async {
+    final response = await http.get(
+      Uri.parse('http://idemo.brave.com.mx/api/pospecto/75'),
+    );
+    if (response.statusCode == 200) {
+      return Prospecto.fromJson(jsonDecode(response.body));
+    } else {
+      throw Exception('Failed to load Prospecto');
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _subir_imagen = buscarProspecto();
+  }
+
+  late Future<Prospecto> _subir_imagen;
   final _keyForm = GlobalKey<FormState>();
   TextEditingController ifefrente = TextEditingController();
   @override
@@ -182,24 +188,7 @@ class _VerificateAcountState extends State<VerificateAcount> {
             key: _keyForm,
             child: Column(
               children: [
-                const Padding(
-                  padding: EdgeInsets.all(12.0),
-                  child: Text(
-                    'Sube un comprobante de tu domicilio particular actual',
-                    textAlign: TextAlign.center,
-                  ),
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                const Text('Puedes usar:'),
-                const SizedBox(
-                  height: 20,
-                ),
-                const Text('-Foto de tu INE por enfrente'),
-                const SizedBox(
-                  height: 20,
-                ),
+                //Cargar Imagen
                 imagen == null ? const Center() : Image.file(imagen!),
                 const SizedBox(
                   height: 10,
@@ -215,14 +204,32 @@ class _VerificateAcountState extends State<VerificateAcount> {
                 const SizedBox(
                   height: 10,
                 ),
-                ElevatedButton(
-                    onPressed: () async {},
-                    child: const Text(
-                      'Subir Imagen',
-                      style: TextStyle(color: Colors.white),
-                    )),
-                const SizedBox(
-                  height: 10,
+                Container(
+                  alignment: Alignment.center,
+                  padding: const EdgeInsets.all(8),
+                  child: FutureBuilder<Prospecto>(
+                    future: _subir_imagen,
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.done) {
+                        if (snapshot.hasData) {
+                          return Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(snapshot.data!.ifefrente),
+                              ElevatedButton(
+                                  onPressed: () {
+                                    subir_imagen();
+                                  },
+                                  child: const Text('Actualizar'))
+                            ],
+                          );
+                        } else if (snapshot.hasError) {
+                          return Text('${snapshot.error}');
+                        }
+                      }
+                      return const CircularProgressIndicator();
+                    },
+                  ),
                 ),
               ],
             ),

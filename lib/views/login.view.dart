@@ -55,6 +55,9 @@ class LoginView extends StatelessWidget {
                     create: (_) => LoginFormProvider(),
                     child: TextFormField(),
                   ),
+                  const SizedBox(
+                    height: 5,
+                  ),
                   TextFormField(
                     controller: email,
                     validator: (valor) {
@@ -72,6 +75,9 @@ class LoginView extends StatelessWidget {
                       helperText: 'correo@correo.com',
                       border: OutlineInputBorder(),
                       isDense: false,
+                      filled: true,
+                      enabledBorder:
+                          OutlineInputBorder(borderSide: BorderSide.none),
                       contentPadding: EdgeInsets.all(10),
                     ),
                   ),
@@ -94,6 +100,9 @@ class LoginView extends StatelessWidget {
                       labelText: 'Contrasena',
                       border: OutlineInputBorder(),
                       isDense: false,
+                      filled: true,
+                      enabledBorder:
+                          OutlineInputBorder(borderSide: BorderSide.none),
                       contentPadding: EdgeInsets.all(10),
                     ),
                   ),
@@ -166,7 +175,7 @@ class LoginView extends StatelessWidget {
             children: [
               const Text('No tienes una cuenta?'),
               GestureDetector(
-                onTap: () => Navigator.pushNamed(context, 'AvisoPrivacidad'),
+                onTap: () => Navigator.pushNamed(context, 'PreguntasRegistro'),
                 child: InkWell(
                   child: Text(
                     ' Registrar',

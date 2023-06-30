@@ -12,13 +12,12 @@ class PruebaPut extends StatefulWidget {
 }
 
 class _PruebaPutState extends State<PruebaPut> {
-  final TextEditingController nombre = TextEditingController();
   final TextEditingController email = TextEditingController();
   late Future<Prospecto> _futureProspecto;
 
   Future<Prospecto> buscarProspecto() async {
     final response = await http.get(
-      Uri.parse('http://idemo.brave.com.mx/api/pospecto/75'),
+      Uri.parse('http://idemo.brave.com.mx/api/pospecto/77'),
     );
     if (response.statusCode == 200) {
       return Prospecto.fromJson(jsonDecode(response.body));
@@ -29,7 +28,7 @@ class _PruebaPutState extends State<PruebaPut> {
 
   Future<Prospecto> alcutalizarProspecto(String email) async {
     final response = await http.put(
-        Uri.parse('http://idemo.brave.com.mx/api/pospecto/75'),
+        Uri.parse('http://idemo.brave.com.mx/api/pospecto/77'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8'
         },
@@ -55,7 +54,7 @@ class _PruebaPutState extends State<PruebaPut> {
       theme: ThemeData(primarySwatch: Colors.blue),
       home: Scaffold(
         appBar: AppBar(
-          title: const Text('Descarga'),
+          title: const Text('Actualizar correo'),
         ),
         body: Container(
           alignment: Alignment.center,
@@ -68,11 +67,12 @@ class _PruebaPutState extends State<PruebaPut> {
                   return Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text(snapshot.data!.email),
-                      TextField(
-                        controller: nombre,
-                        decoration: const InputDecoration(
-                            hintText: 'Introduce tu nombre'),
+                      const Text(
+                        'Verificar Cuenta',
+                        style: TextStyle(fontSize: 20),
+                      ),
+                      const SizedBox(
+                        height: 50,
                       ),
                       TextFormField(
                         controller: email,
@@ -91,18 +91,31 @@ class _PruebaPutState extends State<PruebaPut> {
                           helperText: 'correo@correo.com',
                           border: OutlineInputBorder(),
                           isDense: false,
+                          filled: true,
+                          enabledBorder:
+                              OutlineInputBorder(borderSide: BorderSide.none),
                           contentPadding: EdgeInsets.all(10),
                         ),
                       ),
+                      const SizedBox(
+                        height: 10,
+                      ),
                       ElevatedButton(
                           onPressed: () {
-                            Navigator.pushNamed(context, 'PhoneVerifyPage');
                             setState(() {
                               _futureProspecto =
                                   alcutalizarProspecto(email.text);
                             });
                           },
-                          child: const Text('Descargar data'))
+                          child: const Text('Actualizar')),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      ElevatedButton(
+                          onPressed: () {
+                            Navigator.pushNamed(context, 'PhoneVerifyPage');
+                          },
+                          child: const Text('Obtener Codigo')),
                     ],
                   );
                 } else if (snapshot.hasError) {

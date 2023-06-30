@@ -67,7 +67,15 @@ class _PhoneVerifyPageState extends State<PhoneVerifyPage> {
                   return Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text(snapshot.data!.movil),
+                      const Text(
+                        'Verificar Telefono',
+                        style: TextStyle(
+                          fontSize: 20,
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 30,
+                      ),
                       TextFormField(
                         validator: (valor) {
                           String pattern =
@@ -82,7 +90,7 @@ class _PhoneVerifyPageState extends State<PhoneVerifyPage> {
                         keyboardType: TextInputType.number,
                         decoration: const InputDecoration(
                           labelText: 'Telefono',
-                          helperText: '+52 xxxx xxxx xx ',
+                          helperText: 'XXXX XXXX XX',
                           border: OutlineInputBorder(),
                           isDense: false,
                           contentPadding: EdgeInsets.all(10),
@@ -95,7 +103,16 @@ class _PhoneVerifyPageState extends State<PhoneVerifyPage> {
                                   alcutalizarProspecto(movil.text);
                             });
                           },
-                          child: const Text('Descargar data'))
+                          child: const Text(
+                            'Actualizar',
+                            style: TextStyle(fontSize: 15),
+                          )),
+                      ElevatedButton(
+                          onPressed: () {},
+                          child: const Text(
+                            'Obtener codigo',
+                            style: TextStyle(fontSize: 15),
+                          ))
                     ],
                   );
                 } else if (snapshot.hasError) {

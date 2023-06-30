@@ -2,8 +2,15 @@ import 'package:flutter/material.dart';
 
 import '../../screens/global.colors.dart';
 
-class AvisoPrivacidad extends StatelessWidget {
-  const AvisoPrivacidad({super.key});
+enum AvisoPrivacidadEnum { Canelar, Aceptar }
+
+class AvisoPrivacidad extends StatefulWidget {
+  @override
+  State<AvisoPrivacidad> createState() => _AvisoPrivacidadState();
+}
+
+class _AvisoPrivacidadState extends State<AvisoPrivacidad> {
+  AvisoPrivacidadEnum? _avisoPrivacidadEnum;
 
   @override
   Widget build(BuildContext context) {
@@ -50,13 +57,13 @@ class AvisoPrivacidad extends StatelessWidget {
                         ),
                       ),
                     ),
-                    const Center(
+                    Center(
                       child: Padding(
                         padding:
                             EdgeInsets.symmetric(horizontal: 12, vertical: 5),
                         child: Column(
                           children: [
-                            Padding(
+                            const Padding(
                               padding: EdgeInsets.symmetric(vertical: 15),
                               child: Text(
                                 'Confirmo que tengo conocimiento del contenido del Aviso de Privacidad',
@@ -68,7 +75,7 @@ class AvisoPrivacidad extends StatelessWidget {
                                 textAlign: TextAlign.center,
                               ),
                             ),
-                            Padding(
+                            const Padding(
                               padding: EdgeInsets.symmetric(vertical: 25),
                               child: Text(
                                 'Consiento que mis datos personales sensibles sean tratados y tranferidos de acuerdo al aviso de privacidad',
@@ -80,7 +87,7 @@ class AvisoPrivacidad extends StatelessWidget {
                                 textAlign: TextAlign.center,
                               ),
                             ),
-                            Padding(
+                            const Padding(
                               padding: EdgeInsets.symmetric(vertical: 15),
                               child: Text(
                                 'Confirmo que tengo conocimiento del contenido del Aviso de Privacidad',
@@ -92,7 +99,7 @@ class AvisoPrivacidad extends StatelessWidget {
                                 textAlign: TextAlign.center,
                               ),
                             ),
-                            Padding(
+                            const Padding(
                               padding: EdgeInsets.symmetric(vertical: 15),
                               child: Text(
                                 'Confirmo que tengo conocimiento del contenido del Aviso de Privacidad',
@@ -104,7 +111,48 @@ class AvisoPrivacidad extends StatelessWidget {
                                 textAlign: TextAlign.center,
                               ),
                             ),
-                            Padding(
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            Row(
+                              children: [
+                                Expanded(
+                                  child: RadioListTile<AvisoPrivacidadEnum>(
+                                      contentPadding: const EdgeInsets.all(0.0),
+                                      value: AvisoPrivacidadEnum.Canelar,
+                                      groupValue: _avisoPrivacidadEnum,
+                                      tileColor: Colors.deepPurple.shade50,
+                                      title: Text(
+                                          AvisoPrivacidadEnum.Canelar.name),
+                                      onChanged: (val) {
+                                        setState(() {
+                                          _avisoPrivacidadEnum = val;
+                                        });
+                                      }),
+                                ),
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                                Expanded(
+                                  child: RadioListTile<AvisoPrivacidadEnum>(
+                                      contentPadding: const EdgeInsets.all(0.0),
+                                      value: AvisoPrivacidadEnum.Aceptar,
+                                      groupValue: _avisoPrivacidadEnum,
+                                      tileColor: Colors.deepPurple.shade50,
+                                      title: Text(
+                                          AvisoPrivacidadEnum.Aceptar.name),
+                                      onChanged: (val) {
+                                        setState(() {
+                                          _avisoPrivacidadEnum = val;
+                                        });
+                                      }),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            const Padding(
                               padding: EdgeInsets.symmetric(vertical: 15),
                               child: Text(
                                 'Confirmo que tengo conocimiento del contenido del Aviso de Privacidad',

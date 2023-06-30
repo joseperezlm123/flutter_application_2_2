@@ -26,11 +26,15 @@ class _RegisterViewState extends State<RegisterView> {
   TextEditingController alcaldia = TextEditingController();
   TextEditingController cp = TextEditingController();
   TextEditingController ingreso = TextEditingController();
-
   @override
   Widget build(BuildContext context) {
     final _keyForm = GlobalKey<FormState>();
 
+    final Map<String, String> formValues = {
+      'Genero': 'Masculino',
+      'Estado': 'Estado de Mexico',
+      'Alcaldia': 'Benito Juarez'
+    };
     return Scaffold(
         body: ListView(
       children: [
@@ -172,7 +176,6 @@ class _RegisterViewState extends State<RegisterView> {
                       const SizedBox(
                         height: 5,
                       ),
-
                       Text(
                         'Genero',
                         textAlign: TextAlign.center,
@@ -352,6 +355,27 @@ class _RegisterViewState extends State<RegisterView> {
                       const SizedBox(
                         height: 15,
                       ),
+                      DropdownButtonFormField<String>(
+                          value: 'Estado de Mexico',
+                          items: const [
+                            DropdownMenuItem(
+                                value: 'Estado de Mexico',
+                                child: Text('Estado de Mexico')),
+                            DropdownMenuItem(
+                                value: 'Ciudad de Mexico',
+                                child: Text('Ciudad de Mexico')),
+                            DropdownMenuItem(
+                                value: 'Monterrey', child: Text('Monterrey')),
+                            DropdownMenuItem(
+                                value: 'Puebla', child: Text('Puebla')),
+                          ],
+                          onChanged: (value) {
+                            print(value);
+                            formValues['role'] = value ?? 'Mexico';
+                          }),
+                      const SizedBox(
+                        height: 15,
+                      ),
                       // Email Input
                       TextFormField(
                         controller: alcaldia,
@@ -427,45 +451,6 @@ class _RegisterViewState extends State<RegisterView> {
                       const SizedBox(
                         height: 15,
                       ),
-
-                      // TextFormField(
-                      //   controller: ingresoTipo,
-                      //   validator: (valor) {
-                      //     if (valor!.isEmpty) {
-                      //       return 'Campo vacio';
-                      //     }
-                      //     if (valor.length < 5 || valor.length > 15) {
-                      //       return 'La fecha no es valida';
-                      //     }
-                      //     return null;
-                      //   },
-                      //   keyboardType: TextInputType.text,
-                      //   decoration: const InputDecoration(
-                      //     labelText: 'Ingreso Tipo',
-                      //     border: OutlineInputBorder(),
-                      //     isDense: false,
-                      //     contentPadding: EdgeInsets.all(10),
-                      //   ),
-                      // ),
-                      // SwitchListTile(
-                      //     title: const Text('Fue servidor publico?'),
-                      //     value: fueserpub,
-                      //     onChanged: (bool? value) {
-                      //       if (value != null) {
-                      //         fueserpub = value;
-                      //         setState(() {});
-                      //       }
-                      //     }),
-                      // SwitchListTile(
-                      //     title: const Text(
-                      //         'Tiene algun pariente que fue servidor publico?'),
-                      //     value: parserpub,
-                      //     onChanged: (bool? value) {
-                      //       if (value != null) {
-                      //         parserpub = value;
-                      //         setState(() {});
-                      //       }
-                      //     }),
 
                       Container(
                         padding: const EdgeInsets.all(15),

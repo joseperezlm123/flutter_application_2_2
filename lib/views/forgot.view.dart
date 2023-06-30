@@ -58,9 +58,7 @@ class ForgotView extends StatelessWidget {
                   height: 10,
                 ),
                 GestureDetector(
-                  onTap: () {
-                    Navigator.pop(context);
-                  },
+                  onTap: () {},
                 ),
               ],
             ),

@@ -112,7 +112,7 @@ class OtpForm extends StatelessWidget {
           ),
           ElevatedButton(
               onPressed: () {
-                Navigator.pushNamed(context, 'VerifyPage');
+                Navigator.pushNamed(context, 'PruebaPut');
               },
               child: const Text(
                 'Validar',

@@ -77,7 +77,7 @@ class Prospecto {
         estado: json["estado"],
         alcaldia: json["alcaldia"],
         cp: json["CP"],
-        ifefrente: json["ifefrente"],
+        ifefrente: 'ifefrente',
         ifetras: json["ifetras"],
         foto: json["foto"],
         ingreso: json["ingreso"],

@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class EmailForm extends StatelessWidget {
-  final TextEditingController email = TextEditingController();
   EmailForm({super.key});
+  final TextEditingController email = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -13,10 +13,10 @@ class EmailForm extends StatelessWidget {
           children: [
             Column(
               children: [
-                SizedBox(
+                const SizedBox(
                   height: 200,
                 ),
-                Text('Ingresa la combinacion que mandamos a tu correo '),
+                const Text('Ingresa la combinacion que mandamos a tu correo '),
                 Form(
                   child: SizedBox(
                     height: 200,
@@ -109,7 +109,7 @@ class EmailForm extends StatelessWidget {
                 ),
                 ElevatedButton(
                     onPressed: () async {
-                      Navigator.pushNamed(context, 'VerificateAcount');
+                      Navigator.pushNamed(context, '');
                     },
                     child: const Text('Validar'))
               ],
