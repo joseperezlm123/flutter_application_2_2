@@ -8,6 +8,7 @@ import 'views/forgot.view.dart';
 import 'views/login.view.dart';
 import 'views/phone_verify.dart';
 import 'views/preguntas.registro.dart';
+import 'views/preguntas_final_cuestionario.dart';
 import 'views/prueba.get.dart';
 import 'views/prueba.put.dart';
 import 'views/prueba.put.image.dart';
@@ -33,7 +34,7 @@ class App extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Flutter LoginPage',
       theme: ThemeData(primarySwatch: Colors.blue),
-      initialRoute: 'PreguntasRegistro',
+      initialRoute: 'PruebaPutPreguntas',
       routes: {
         '/': (context) => const SplashView(),
         'LoginView': (context) => LoginView(),
@@ -53,6 +54,7 @@ class App extends StatelessWidget {
         'PruebaImagePut': (context) => const PruebaImagePut(),
         'PreguntasRegistro': (context) => const PreguntasRegistro(),
         'PhoneVerifyPage': (context) => const PhoneVerifyPage(),
+        'PruebaPutPreguntas': (context) => const PruebaPutPreguntas(),
       },
     );
   }

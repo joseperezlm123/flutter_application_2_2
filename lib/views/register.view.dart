@@ -26,13 +26,17 @@ class _RegisterViewState extends State<RegisterView> {
   TextEditingController alcaldia = TextEditingController();
   TextEditingController cp = TextEditingController();
   TextEditingController ingreso = TextEditingController();
+  TextEditingController fueServpub = TextEditingController();
+  TextEditingController parServpub = TextEditingController();
   @override
   Widget build(BuildContext context) {
+    bool fue_servpub = false;
+    bool parServpub = false;
     final _keyForm = GlobalKey<FormState>();
 
     final Map<String, String> formValues = {
       'Genero': 'Masculino',
-      'Estado': 'Estado de Mexico',
+      'estado': 'estado',
       'Alcaldia': 'Benito Juarez'
     };
     return Scaffold(
@@ -356,11 +360,10 @@ class _RegisterViewState extends State<RegisterView> {
                         height: 15,
                       ),
                       DropdownButtonFormField<String>(
-                          value: 'Estado de Mexico',
+                          value: 'estado',
                           items: const [
                             DropdownMenuItem(
-                                value: 'Estado de Mexico',
-                                child: Text('Estado de Mexico')),
+                                value: 'estado', child: Text('estado')),
                             DropdownMenuItem(
                                 value: 'Ciudad de Mexico',
                                 child: Text('Ciudad de Mexico')),
@@ -451,6 +454,25 @@ class _RegisterViewState extends State<RegisterView> {
                       const SizedBox(
                         height: 15,
                       ),
+                      SwitchListTile(
+                          title: const Text('Fue servidor publico?'),
+                          value: fue_servpub,
+                          onChanged: (bool? value) {
+                            if (value != null) {
+                              fue_servpub = value;
+                              setState(() {});
+                            }
+                          }),
+                      SwitchListTile(
+                          title: const Text(
+                              'Tiene algun pariente que fue servidor publido?'),
+                          value: parServpub,
+                          onChanged: (bool? value) {
+                            if (value != null) {
+                              parServpub = value;
+                              setState(() {});
+                            }
+                          }),
 
                       Container(
                         padding: const EdgeInsets.all(15),
@@ -470,6 +492,7 @@ class _RegisterViewState extends State<RegisterView> {
                                 nombre: _nombre.text,
                                 paterno: paterno.text,
                                 alcaldia: alcaldia.text,
+                                fueServpub: fueServpub.toString(),
                                 email: '1',
                                 createdAt: null,
                                 nacimiento: null,
@@ -487,6 +510,13 @@ class _RegisterViewState extends State<RegisterView> {
                                 print('Validacion exitosa');
                               } else {
                                 print('Ha ocurrido un error');
+                              }
+                              if (_keyForm.currentState!.validate()) {
+                                Map<String, dynamic> info = {
+                                  'fue_servpub': fue_servpub,
+                                  'parServpub': parServpub
+                                };
+                                print(info);
                               }
                             },
                             child: const Text(
